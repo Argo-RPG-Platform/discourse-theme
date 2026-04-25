@@ -1,0 +1,98 @@
+// ============================================================
+// ARGO DISCOURSE THEME — desktop.scss
+// Applied only on desktop (Discourse injects this for non-mobile).
+// Supplements common.scss with wider-layout tweaks.
+// ============================================================
+
+
+// ============================================================
+// HEADER
+// ============================================================
+
+// Let the header span the full viewport width on desktop
+.d-header .wrap {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+// On desktop, show the username text next to the user avatar
+.d-header .current-user .avatar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  .name {
+    display: inline;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--argo-foreground);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+  }
+}
+
+// Show all nav labels on desktop (they may be hidden on narrow widths)
+.argo-nav__link span { display: inline; }
+
+
+// ============================================================
+// CATEGORY CARD GRID
+// ============================================================
+
+// On wider desktop screens allow up to 4 columns
+.category-list,
+table.category-list {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+}
+
+
+// ============================================================
+// TOPIC LIST
+// ============================================================
+
+// Wider title column on desktop — let it breathe
+table.topic-list td.main-link {
+  padding-left: 8px;
+  padding-right: 12px;
+}
+
+// Show all stat columns on desktop
+table.topic-list {
+  .num.posts-map,
+  .num.views,
+  .num.age,
+  .activity { display: table-cell; }
+}
+
+
+// ============================================================
+// SIDEBAR
+// ============================================================
+
+// Fixed sidebar width on desktop
+.sidebar-wrapper {
+  width: 220px !important;
+  min-width: 220px !important;
+}
+
+
+// ============================================================
+// MAIN CONTENT AREA
+// ============================================================
+
+// Generous max-width for the main outlet on desktop
+#main-outlet {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+// Category list gets a bit of top breathing room below the fixed header
+.category-list-area,
+.categories-and-latest,
+.category-boxes,
+.category-list {
+  margin-top: 16px;
+}
