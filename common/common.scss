@@ -121,19 +121,78 @@ h1, h2, h3, h4, h5, h6 {
 .d-header .wrap {
   display: flex !important;
   align-items: center !important;
+  flex-wrap: nowrap !important;
   height: 56px !important;
   max-width: 100% !important;
   padding: 0 !important;
   width: 100% !important;
 }
 
-// Our injected nav fills the wrap
+// Discourse 3.x wraps all native header content in .contents —
+// flatten it so its children become direct flex siblings of #argo-nav
+.d-header .contents {
+  display: contents !important;
+}
+
+// Our injected nav: sits between the hamburger (left) and native icons (right)
 #argo-nav {
-  flex: 1;
+  flex: 1 1 0% !important;
   height: 56px;
   display: flex;
   align-items: center;
   min-width: 0;
+  order: 2;
+}
+
+// Hamburger / sidebar toggle — keep on far left
+.d-header .header-buttons.start,
+.d-header .hamburger-dropdown,
+.d-header .btn-sidebar-toggle {
+  order: 1;
+  flex-shrink: 0;
+  display: flex !important;
+  align-items: center;
+}
+
+// Right-side icons (chat, notifications, user menu) — keep on far right
+.d-header .header-buttons.end,
+.d-header .d-header-icons,
+.d-header .panel {
+  order: 3;
+  flex-shrink: 0;
+  display: flex !important;
+  align-items: center;
+  padding-right: 8px;
+  gap: 2px;
+}
+
+// Restyle ALL native icon buttons to match Argo look
+.d-header .header-buttons .btn,
+.d-header .header-buttons .icon,
+.d-header .d-header-icons .btn,
+.d-header .panel .btn,
+.d-header .header-dropdown-toggle {
+  background: transparent !important;
+  border: none !important;
+  color: var(--argo-text-secondary) !important;
+  border-radius: var(--radius) !important;
+  width: 36px;
+  height: 36px;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  transition:
+    color var(--motion-duration-quick) var(--motion-ease-standard),
+    background-color var(--motion-duration-quick) var(--motion-ease-standard);
+
+  &:hover {
+    color: var(--argo-foreground) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .d-icon { color: inherit !important; }
 }
 
 .argo-nav__inner {
@@ -213,8 +272,19 @@ h1, h2, h3, h4, h5, h6 {
   fill: none;
 }
 
-// Spacer — pushes Discourse's .header-buttons to the far right
+// Spacer — pushes right-side native buttons to the far right
 .argo-nav__spacer { flex: 1; }
+
+// Native buttons moved into #argo-nav by JS (integrateNativeHeaderButtons)
+.argo-native-buttons {
+  display: flex !important;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+
+  &--left { margin-right: 4px; }
+  &--right { margin-left: 4px; padding-right: 8px; }
+}
 
 // Discourse native header buttons (search, notifications, user menu)
 .d-header .header-buttons {
