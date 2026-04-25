@@ -935,6 +935,175 @@ a.discourse-tag {
 
 
 // ============================================================
+// L: ADMIN AREA
+// Discourse's admin pages use .boxed.white / .admin-content which
+// normally render with a white background and dark text.
+// We override everything here so the admin UI stays readable in our
+// dark theme.
+// ============================================================
+
+// Main content boxes
+.boxed.white,
+.admin-content,
+.admin-contents,
+.admin-main-nav,
+.admin-detail,
+.admin-config-area,
+.admin-config-area-sidebar,
+.admin-config-area__primary-content {
+  background: var(--argo-card) !important;
+  color: var(--argo-foreground) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+// Page headers and titles inside admin
+.d-page-header__title,
+.d-page-subheader__title,
+.d-page-header__description {
+  color: var(--argo-foreground) !important;
+}
+
+.d-breadcrumbs__link {
+  color: var(--argo-text-secondary) !important;
+  &:hover { color: var(--argo-gold) !important; }
+}
+
+// Admin nav pills (General / Moderation / Security / Reports tabs)
+.nav.nav-pills .navigation-link {
+  color: var(--argo-text-secondary) !important;
+  border-radius: var(--radius) !important;
+  &:hover { color: var(--argo-foreground) !important; background: rgba(255,255,255,0.06) !important; }
+  &.active { color: var(--argo-gold) !important; background: var(--surface-accent-bg) !important; }
+}
+
+// Section headings inside admin reports / dashboard
+.section-title h2,
+.section-title h3,
+.section-title h4,
+.storage-stats-title,
+.version-number h3,
+.version-number h4,
+.version-notes {
+  color: var(--argo-foreground) !important;
+}
+
+// Version / stats boxes
+.dashboard-stats {
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid var(--surface-border) !important;
+  border-radius: var(--radius) !important;
+  color: var(--argo-foreground) !important;
+}
+
+// Admin report links and cells
+.admin-report-counters .cell.title a,
+.admin-report .d-page-subheader__title-link,
+.report-url,
+a.report-url span {
+  color: var(--argo-gold) !important;
+  &:hover { color: var(--argo-gold-dark) !important; }
+}
+
+.admin-report-counters .cell.value .number,
+.admin-report-counters .cell.value {
+  color: var(--argo-foreground) !important;
+}
+
+.counters-header .counters-cell {
+  color: var(--argo-text-secondary) !important;
+}
+
+// Alert / no-data info boxes in admin
+.alert.alert-info.report-alert {
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid var(--surface-border) !important;
+  color: var(--argo-text-secondary) !important;
+  border-radius: var(--radius) !important;
+
+  a { color: var(--argo-text-secondary) !important; }
+}
+
+// Inline table (users by type/trust-level)
+.admin-report-inline-table .table-cell {
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid var(--surface-border) !important;
+  border-radius: var(--radius) !important;
+  color: var(--argo-foreground) !important;
+
+  .label { color: var(--argo-text-secondary) !important; }
+  .value .number { color: var(--argo-gold) !important; }
+}
+
+// Trend indicators
+.trend .value { color: var(--argo-text-secondary) !important; }
+.trending-up .value { color: var(--argo-success) !important; }
+.trending-down .value, .high-trending-down .value { color: var(--argo-danger) !important; }
+.high-trending-up .value { color: var(--argo-success) !important; }
+
+// Admin sidebar active state (uses .admin-sidebar-nav-link.active)
+.admin-sidebar-nav-link.active {
+  color: var(--argo-gold) !important;
+  background: var(--surface-accent-bg) !important;
+}
+
+// Back to forum link
+a.sidebar-sections__back-to-forum {
+  color: var(--argo-text-secondary) !important;
+  &:hover { color: var(--argo-gold) !important; }
+}
+
+// Period chooser dropdown
+.period-chooser-header {
+  color: var(--argo-foreground) !important;
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid var(--surface-border) !important;
+  border-radius: var(--radius) !important;
+  h2 { color: var(--argo-foreground) !important; font-family: var(--font-body) !important; }
+}
+
+// Storage stats
+.admin-report-storage-stats {
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid var(--surface-border) !important;
+  border-radius: var(--radius) !important;
+  padding: 16px !important;
+  color: var(--argo-foreground) !important;
+  a { color: var(--argo-gold) !important; }
+  p { color: var(--argo-text-secondary) !important; }
+}
+
+// Last dashboard update box
+.last-dashboard-update {
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid var(--surface-border) !important;
+  border-radius: var(--radius) !important;
+  padding: 16px !important;
+  color: var(--argo-text-secondary) !important;
+  h4 { color: var(--argo-foreground) !important; }
+  p { color: var(--argo-text-secondary) !important; }
+  a.relative-date { color: var(--argo-text-secondary) !important; }
+}
+
+// Chart canvas containers
+.chart-canvas-container {
+  background: rgba(255,255,255,0.02) !important;
+  border-radius: var(--radius) !important;
+  border: 1px solid var(--surface-border) !important;
+}
+
+// Admin sidebar panel header
+.sidebar-panel-header { background: transparent !important; }
+
+// General text within admin area
+.admin-area p,
+.admin-area li,
+.admin-area label,
+.admin-area span:not([class*="d-icon"]) {
+  color: inherit;
+}
+
+// ============================================================
 // K: INPUT FIELDS AND FORMS
 // ============================================================
 input[type="text"],
