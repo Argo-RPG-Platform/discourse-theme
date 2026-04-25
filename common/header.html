@@ -1,0 +1,68 @@
+<div id="argo-nav" role="navigation" aria-label="Argo navigation">
+  <div class="argo-nav__inner">
+
+    <!-- Logo -->
+    <a class="argo-nav__logo" href="https://argo.games" aria-label="Argo home">
+      <img src="{{theme_uploads_local 'logo.webp'}}" alt="Argo" height="32">
+    </a>
+
+    <!-- Primary nav links -->
+    <nav class="argo-nav__links" aria-label="Primary navigation">
+
+      <a class="argo-nav__link" href="https://app.argo.games/" data-argo-nav="home">
+        <svg class="argo-nav__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect width="7" height="7" x="3" y="3" rx="1"/>
+          <rect width="7" height="7" x="14" y="3" rx="1"/>
+          <rect width="7" height="7" x="14" y="14" rx="1"/>
+          <rect width="7" height="7" x="3" y="14" rx="1"/>
+        </svg>
+        <span>Home</span>
+      </a>
+
+      <a class="argo-nav__link" href="https://app.argo.games/guilds" data-argo-nav="guilds">
+        <svg class="argo-nav__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+        </svg>
+        <span>Guilds</span>
+      </a>
+
+      <a class="argo-nav__link" href="https://app.argo.games/campaigns" data-argo-nav="campaigns">
+        <svg class="argo-nav__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+        <span>Campaigns</span>
+      </a>
+
+      <a class="argo-nav__link" href="https://app.argo.games/marketplace" data-argo-nav="marketplace">
+        <svg class="argo-nav__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/>
+          <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+          <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/>
+          <path d="M2 7h20"/>
+          <path d="M22 7v3a2 2 0 0 1-2 2 2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7"/>
+        </svg>
+        <span>Marketplace</span>
+      </a>
+
+      <a class="argo-nav__link argo-nav__link--active" href="/" data-argo-nav="forum" aria-current="page">
+        <svg class="argo-nav__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          <path d="M8 10h.01"/>
+          <path d="M12 10h.01"/>
+          <path d="M16 10h.01"/>
+        </svg>
+        <span>Forum</span>
+      </a>
+
+    </nav>
+
+    <!-- Spacer — pushes Discourse's native .header-buttons to the right -->
+    <div class="argo-nav__spacer" aria-hidden="true"></div>
+
+    <!-- Discourse's native .header-buttons (search, notifications, user menu) are
+         rendered after #argo-nav in .d-header .wrap and naturally sit at the right
+         edge due to the spacer above. No additional HTML needed here. -->
+
+  </div>
+</div>

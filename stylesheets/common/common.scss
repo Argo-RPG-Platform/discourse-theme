@@ -1,0 +1,917 @@
+// ============================================================
+// ARGO DISCOURSE THEME — common.scss
+// Mirrors the Argo WebApp design system:
+//   - Glass panel surfaces
+//   - Gold (#FFC64A) primary accent
+//   - Manofa headers, Inter body
+//   - Dark background (#1A1C26)
+// ============================================================
+
+
+// ============================================================
+// A: DESIGN TOKENS
+// ============================================================
+html,
+body {
+  // Motion
+  --motion-duration-quick:      180ms;
+  --motion-duration-standard:   240ms;
+  --motion-duration-deliberate: 320ms;
+  --motion-ease-standard:       cubic-bezier(0.22, 1, 0.36, 1);
+
+  // Glass surface system
+  --surface-panel-bg:
+    linear-gradient(180deg, rgba(34, 56, 72, 0.22) 0%, rgba(16, 28, 38, 0.2) 100%),
+    rgba(25, 48, 62, 0.24);
+  --surface-panel-bg-strong:
+    linear-gradient(180deg, rgba(44, 66, 84, 0.28) 0%, rgba(20, 32, 44, 0.22) 100%),
+    rgba(25, 48, 62, 0.3);
+  --surface-section-bg:         rgba(255, 255, 255, 0.04);
+  --surface-accent-bg:          rgba(255, 198, 74, 0.08);
+  --surface-accent-border:      rgba(255, 198, 74, 0.16);
+  --surface-border:             rgba(255, 255, 255, 0.08);
+  --surface-border-strong:      rgba(255, 255, 255, 0.14);
+  --surface-shadow-soft:
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 10px 30px rgba(0, 0, 0, 0.2);
+  --surface-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 18px 48px rgba(0, 0, 0, 0.28);
+  --surface-backdrop-blur:       blur(16px);
+  --surface-backdrop-blur-strong: blur(20px);
+
+  // Brand colors
+  --argo-bg:           #1A1C26;
+  --argo-card:         #20222E;
+  --argo-sidebar-bg:   #151820;
+  --argo-foreground:   #EDE8DC;
+  --argo-gold:         #FFC64A;
+  --argo-gold-dark:    #E5A832;
+  --argo-secondary:    #2C2F3D;
+  --argo-border:       #303447;
+  --argo-muted:        #272A38;
+  --argo-danger:       #CC2929;
+  --argo-success:      #338055;
+  --argo-online:       #33CC66;
+  --argo-text-secondary: rgba(237, 232, 220, 0.6);
+
+  // Typography
+  --font-brand:          "manofa", sans-serif;
+  --font-brand-condensed: "manofa-condensed", "manofa", sans-serif;
+  --font-body:           "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --radius:              0.5rem;
+}
+
+
+// ============================================================
+// B: PAGE FOUNDATION
+// ============================================================
+body {
+  background-color: var(--argo-bg) !important;
+  color: var(--argo-foreground);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-brand);
+  letter-spacing: 0.01em;
+  line-height: 1.12;
+}
+
+#main-outlet,
+.wrap,
+.container {
+  background: transparent;
+}
+
+// Scrollbars
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--argo-bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--argo-border);
+  border-radius: 3px;
+  &:hover { background: var(--argo-secondary); }
+}
+
+
+// ============================================================
+// C: HEADER
+// ============================================================
+
+// Apply glass panel to the Discourse header container
+.d-header {
+  background: var(--surface-panel-bg-strong) !important;
+  backdrop-filter: var(--surface-backdrop-blur) !important;
+  -webkit-backdrop-filter: var(--surface-backdrop-blur) !important;
+  border-bottom: 1px solid var(--surface-border) !important;
+  box-shadow: var(--surface-shadow-soft) !important;
+  height: 56px !important;
+  z-index: 1000;
+}
+
+// Hide Discourse's built-in logo — we supply our own in header.html
+.d-header .home-logo-wrapper-outlet,
+.d-header .logo-wrapper,
+.d-header .title {
+  display: none !important;
+}
+
+// The inner wrap becomes a pure flex container for our nav + native buttons
+.d-header .wrap {
+  display: flex !important;
+  align-items: center !important;
+  height: 56px !important;
+  max-width: 100% !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+// Our injected nav fills the wrap
+#argo-nav {
+  flex: 1;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.argo-nav__inner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 56px;
+  padding: 0 16px;
+  gap: 8px;
+}
+
+// Logo
+.argo-nav__logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  text-decoration: none !important;
+  line-height: 0;
+  margin-right: 4px;
+
+  img {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+
+  &:hover { opacity: 0.85; }
+}
+
+// Nav links container
+.argo-nav__links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+// Individual nav link
+.argo-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--argo-text-secondary) !important;
+  text-decoration: none !important;
+  transition:
+    color var(--motion-duration-quick) var(--motion-ease-standard),
+    background-color var(--motion-duration-quick) var(--motion-ease-standard);
+  white-space: nowrap;
+
+  &:hover {
+    color: var(--argo-foreground) !important;
+    background: rgba(255, 255, 255, 0.06);
+    text-decoration: none !important;
+  }
+
+  &--active,
+  &[aria-current="page"] {
+    color: var(--argo-gold) !important;
+    background: var(--surface-accent-bg);
+
+    &:hover { background: rgba(255, 198, 74, 0.12); }
+
+    .argo-nav__icon { stroke: var(--argo-gold); }
+  }
+}
+
+.argo-nav__icon {
+  flex-shrink: 0;
+  stroke: currentColor;
+  fill: none;
+}
+
+// Spacer — pushes Discourse's .header-buttons to the far right
+.argo-nav__spacer { flex: 1; }
+
+// Discourse native header buttons (search, notifications, user menu)
+.d-header .header-buttons {
+  display: flex !important;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+  padding: 0 8px;
+  margin: 0 !important;
+
+  .btn,
+  .btn-default,
+  .icon.btn {
+    background: transparent !important;
+    border: none !important;
+    color: var(--argo-text-secondary) !important;
+    border-radius: var(--radius) !important;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+    box-shadow: none !important;
+    transition:
+      color var(--motion-duration-quick) var(--motion-ease-standard),
+      background-color var(--motion-duration-quick) var(--motion-ease-standard);
+
+    &:hover {
+      color: var(--argo-foreground) !important;
+      background: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    .d-icon { color: inherit !important; }
+  }
+
+  // Notification count badge
+  .badge-notification {
+    background: var(--argo-gold) !important;
+    color: #000 !important;
+    font-weight: 700;
+    font-size: 0.65rem;
+    border-radius: 9999px;
+    min-width: 16px;
+    height: 16px;
+    line-height: 16px;
+    padding: 0 4px;
+  }
+}
+
+// User avatar in the header
+.d-header .current-user img.avatar,
+.d-header .header-dropdown-toggle .avatar {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  border: 1.5px solid var(--surface-border) !important;
+}
+
+
+// ============================================================
+// D: SIDEBAR
+// ============================================================
+.sidebar-wrapper,
+#sidebar,
+.sidebar-container {
+  background: var(--argo-sidebar-bg) !important;
+  border-right: 1px solid var(--surface-border) !important;
+}
+
+.sidebar-section-header-text {
+  font-family: var(--font-brand-condensed);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--argo-text-secondary) !important;
+}
+
+.sidebar-section-link-wrapper a,
+.sidebar-section-link {
+  color: var(--argo-text-secondary) !important;
+  border-radius: var(--radius) !important;
+  transition:
+    color var(--motion-duration-quick) var(--motion-ease-standard),
+    background-color var(--motion-duration-quick) var(--motion-ease-standard);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: var(--argo-foreground) !important;
+  }
+
+  &.active,
+  &[aria-current] {
+    color: var(--argo-gold) !important;
+    background: var(--surface-accent-bg) !important;
+  }
+
+  .d-icon { color: inherit !important; }
+}
+
+
+// ============================================================
+// E: CATEGORIES AS CARDS
+// Convert the default <table> layout to a responsive card grid.
+// ============================================================
+
+// Outer table → CSS grid
+.category-list,
+table.category-list {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  width: 100%;
+  border: none !important;
+  background: transparent !important;
+  border-collapse: unset !important;
+  border-spacing: 0 !important;
+
+  // Hide table header row
+  thead { display: none !important; }
+
+  // tbody transparent to grid — <tr> become direct grid children
+  tbody { display: contents !important; }
+}
+
+// Each <tr> → card
+.category-list-item,
+tr.category {
+  display: flex !important;
+  flex-direction: column !important;
+  background: var(--surface-panel-bg) !important;
+  border: 1px solid var(--surface-border) !important;
+  border-radius: var(--radius) !important;
+  overflow: hidden !important;
+  box-shadow: var(--surface-shadow-soft);
+  backdrop-filter: var(--surface-backdrop-blur);
+  -webkit-backdrop-filter: var(--surface-backdrop-blur);
+  transition:
+    transform var(--motion-duration-standard) var(--motion-ease-standard),
+    border-color var(--motion-duration-standard) var(--motion-ease-standard),
+    box-shadow var(--motion-duration-standard) var(--motion-ease-standard);
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: var(--surface-border-strong) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 20px 48px rgba(0, 0, 0, 0.35);
+  }
+
+  // Strip default table-cell display from all td
+  td {
+    display: block !important;
+    border: none !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+}
+
+// Category banner image area (top of card)
+.category-list-item .category-logo,
+tr.category .category-logo {
+  display: block !important;
+  width: 100% !important;
+  height: 160px !important;
+  overflow: hidden !important;
+  flex-shrink: 0;
+  background: var(--argo-muted);
+
+  img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+}
+
+// Gold stripe when category has no image (set via JS data attribute)
+.category-list-item[data-no-image]::before,
+tr.category[data-no-image]::before {
+  content: '';
+  display: block;
+  height: 4px;
+  background: linear-gradient(90deg, var(--argo-gold), var(--argo-gold-dark));
+  flex-shrink: 0;
+}
+
+// Card body — name + description
+.category-list-item td.category,
+tr.category td.category {
+  padding: 16px !important;
+  flex: 1;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px;
+}
+
+// Category name link
+.category-list-item .category-name,
+tr.category .category-name,
+.category-list-item a.category-name,
+tr.category a.category-name {
+  font-family: var(--font-brand) !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+  color: var(--argo-gold) !important;
+  text-decoration: none !important;
+  line-height: 1.2;
+
+  &:hover {
+    color: var(--argo-gold-dark) !important;
+    text-decoration: none !important;
+  }
+}
+
+// Description — 2-line clamp
+.category-list-item .category-description,
+tr.category .category-description {
+  font-size: 0.875rem;
+  color: var(--argo-text-secondary);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  p { margin: 0; }
+  a { color: var(--argo-text-secondary); }
+}
+
+// Topic count cell → amber chip
+.category-list-item td.topics,
+tr.category td.topics {
+  padding: 0 16px 14px !important;
+  display: flex !important;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.category-list-item td.topics .value,
+tr.category td.topics .value,
+.category-list-item .num.topics a,
+tr.category .num.topics a {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-family: var(--font-brand-condensed);
+  letter-spacing: 0.04em;
+  background: var(--surface-accent-bg);
+  border: 1px solid var(--surface-accent-border);
+  color: var(--argo-gold) !important;
+  text-decoration: none !important;
+}
+
+// Subcategory badges within card
+.category-list-item .subcategories,
+tr.category .subcategories {
+  padding: 0 16px 12px !important;
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 4px;
+
+  .badge-category {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--surface-border);
+    color: var(--argo-text-secondary) !important;
+    text-decoration: none !important;
+
+    &:hover { color: var(--argo-foreground) !important; }
+  }
+}
+
+// Hide the "Latest" column entirely — not needed in card view
+.category-list-item td.latest,
+tr.category td.latest {
+  display: none !important;
+}
+
+
+// ============================================================
+// F: TOPIC LIST
+// ============================================================
+table.topic-list {
+  background: transparent !important;
+  border: none !important;
+  width: 100%;
+
+  thead th {
+    background: transparent !important;
+    border-bottom: 1px solid var(--surface-border) !important;
+    color: var(--argo-text-secondary) !important;
+    font-family: var(--font-brand-condensed);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 8px 12px;
+  }
+}
+
+.topic-list-item {
+  border-bottom: 1px solid var(--surface-border) !important;
+  background: transparent !important;
+  transition: background-color var(--motion-duration-quick) var(--motion-ease-standard);
+
+  &:hover { background: rgba(255, 255, 255, 0.03) !important; }
+
+  td { background: transparent !important; }
+
+  // Topic title
+  .title a,
+  .topic-title a,
+  .link-top-line a,
+  .raw-topic-link {
+    color: var(--argo-foreground) !important;
+    font-weight: 500;
+    font-size: 1rem;
+    text-decoration: none !important;
+
+    &:hover { color: var(--argo-gold) !important; }
+  }
+
+  // Visited (read) topics — slightly dimmer
+  &.visited .title a,
+  &.visited .topic-title a {
+    color: var(--argo-text-secondary) !important;
+    font-weight: 400;
+  }
+
+  // Category badge on topic row
+  .badge-category__wrapper .badge-category,
+  a.badge-category {
+    background: var(--surface-accent-bg) !important;
+    border: 1px solid var(--surface-accent-border) !important;
+    color: var(--argo-gold) !important;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    padding: 1px 6px;
+    text-decoration: none !important;
+  }
+
+  // Meta counts (posts, views, activity)
+  .num.posts-map a,
+  .num.views .number,
+  .num.age a,
+  .activity {
+    color: var(--argo-text-secondary) !important;
+    font-size: 0.8125rem;
+  }
+}
+
+
+// ============================================================
+// G: BUTTONS
+// ============================================================
+.btn-primary,
+.btn.btn-primary {
+  background: var(--argo-gold) !important;
+  color: #000 !important;
+  border: none !important;
+  border-radius: var(--radius) !important;
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  letter-spacing: 0.01em;
+  transition:
+    background-color var(--motion-duration-quick) var(--motion-ease-standard),
+    transform var(--motion-duration-quick) var(--motion-ease-standard);
+
+  &:hover { background: var(--argo-gold-dark) !important; }
+  &:active { transform: scale(0.98); }
+}
+
+.btn-default,
+.btn.btn-default {
+  background: transparent !important;
+  border: 1px solid var(--surface-border-strong) !important;
+  color: var(--argo-foreground) !important;
+  border-radius: var(--radius) !important;
+  font-family: var(--font-body) !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  transition:
+    border-color var(--motion-duration-quick) var(--motion-ease-standard),
+    background-color var(--motion-duration-quick) var(--motion-ease-standard);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border-color: var(--surface-border-strong) !important;
+  }
+
+  .d-icon { color: inherit !important; }
+}
+
+.btn-danger,
+.btn.btn-danger {
+  background: var(--argo-danger) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: var(--radius) !important;
+
+  &:hover { background: #b52020 !important; }
+}
+
+
+// ============================================================
+// H: POST CONTENT (.cooked)
+// ============================================================
+.cooked {
+  color: var(--argo-foreground);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-brand);
+    color: var(--argo-foreground);
+    letter-spacing: 0.01em;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.2;
+  }
+
+  a {
+    color: var(--argo-gold);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    &:hover { color: var(--argo-gold-dark); }
+  }
+
+  blockquote {
+    border-left: 3px solid var(--surface-border-strong);
+    background: var(--surface-section-bg);
+    padding: 12px 16px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    color: var(--argo-text-secondary);
+    margin: 1em 0;
+    aside.quote { margin: 0; }
+  }
+
+  code {
+    background: var(--argo-muted);
+    border: 1px solid var(--surface-border);
+    border-radius: calc(var(--radius) * 0.75);
+    font-size: 0.875em;
+    color: #e8dcc0;
+    padding: 2px 5px;
+  }
+
+  pre {
+    background: var(--argo-muted);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    overflow-x: auto;
+
+    code {
+      background: none;
+      border: none;
+      padding: 0;
+    }
+  }
+
+  img {
+    max-width: 100%;
+    border-radius: var(--radius);
+    border: 1px solid var(--surface-border);
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--surface-border);
+    margin: 1.5em 0;
+  }
+
+  ul, ol {
+    padding-left: 1.5em;
+    li { margin-bottom: 0.3em; }
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+
+    th, td {
+      border: 1px solid var(--surface-border);
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    th {
+      background: var(--surface-section-bg);
+      font-family: var(--font-brand-condensed);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: 0.875rem;
+      color: var(--argo-text-secondary);
+    }
+
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+  }
+}
+
+
+// ============================================================
+// I: MODALS, COMPOSER, DROPDOWNS
+// ============================================================
+
+// Modal backdrop
+.modal-backdrop,
+.d-modal__backdrop {
+  background: rgba(10, 12, 18, 0.7) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+// Modal panel
+.modal-inner-container,
+.d-modal__container,
+.modal-body {
+  background: var(--argo-card) !important;
+  border: 1px solid var(--surface-border-strong) !important;
+  border-radius: calc(var(--radius) * 2) !important;
+  box-shadow: var(--surface-shadow) !important;
+  color: var(--argo-foreground);
+}
+
+.modal-header,
+.d-modal__header {
+  border-bottom: 1px solid var(--surface-border) !important;
+  background: transparent !important;
+
+  h3 {
+    font-family: var(--font-brand);
+    color: var(--argo-foreground);
+  }
+}
+
+// Dropdown menus
+.dropdown-menu,
+.select-kit-collection,
+.menu-container,
+.menu-panel {
+  background: var(--argo-card) !important;
+  border: 1px solid var(--surface-border-strong) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--surface-shadow) !important;
+
+  .item a,
+  .select-kit-row,
+  .widget-link {
+    color: var(--argo-foreground) !important;
+    transition: background-color var(--motion-duration-quick) var(--motion-ease-standard);
+
+    &:hover,
+    &.is-highlighted {
+      background: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    &.is-selected {
+      color: var(--argo-gold) !important;
+      background: var(--surface-accent-bg) !important;
+    }
+  }
+
+  hr, .divider {
+    border-color: var(--surface-border) !important;
+  }
+}
+
+// Composer (reply / new topic)
+#reply-control {
+  background: var(--argo-card) !important;
+  border-top: 1px solid var(--surface-border-strong) !important;
+}
+
+.d-editor-textarea-wrapper {
+  background: var(--argo-muted) !important;
+  border: 1px solid var(--surface-border) !important;
+  border-radius: var(--radius) !important;
+}
+
+.d-editor-input {
+  background: transparent !important;
+  color: var(--argo-foreground) !important;
+  font-family: var(--font-body);
+  caret-color: var(--argo-gold);
+}
+
+.d-editor-preview {
+  background: var(--argo-bg) !important;
+  border-left: 1px solid var(--surface-border) !important;
+}
+
+.d-editor-button-bar .btn {
+  color: var(--argo-text-secondary) !important;
+  &:hover { color: var(--argo-foreground) !important; background: rgba(255,255,255,0.06) !important; }
+}
+
+
+// ============================================================
+// J: BADGES, NOTIFICATIONS, TAG PILLS, USER CARD
+// ============================================================
+
+// Notification count dot
+.badge-notification,
+.unread-notifications {
+  background: var(--argo-gold) !important;
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+
+// Tag pills
+.discourse-tag,
+a.discourse-tag {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid var(--surface-border) !important;
+  border-radius: 9999px !important;
+  color: var(--argo-text-secondary) !important;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-decoration: none !important;
+  transition:
+    color var(--motion-duration-quick) var(--motion-ease-standard),
+    border-color var(--motion-duration-quick) var(--motion-ease-standard);
+
+  &:hover {
+    color: var(--argo-gold) !important;
+    border-color: var(--surface-accent-border) !important;
+  }
+}
+
+// User card popup
+.user-card,
+.card-content {
+  background: var(--argo-card) !important;
+  border: 1px solid var(--surface-border-strong) !important;
+  border-radius: calc(var(--radius) * 2) !important;
+  box-shadow: var(--surface-shadow) !important;
+}
+
+// Trust-level / role badge colors
+.badge-type {
+  border-radius: var(--radius) !important;
+}
+
+
+// ============================================================
+// K: INPUT FIELDS AND FORMS
+// ============================================================
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+textarea,
+.select-kit .select-kit-header {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid var(--surface-border-strong) !important;
+  border-radius: var(--radius) !important;
+  color: var(--argo-foreground) !important;
+  font-family: var(--font-body) !important;
+  font-size: 0.875rem !important;
+  transition: border-color var(--motion-duration-quick) var(--motion-ease-standard);
+
+  &:focus,
+  &:focus-within {
+    border-color: var(--argo-gold) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(255, 198, 74, 0.15) !important;
+  }
+
+  &::placeholder { color: rgba(237, 232, 220, 0.3) !important; }
+}
+
+// Search input in the search panel
+.search-container input,
+#search-term {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: var(--surface-border-strong) !important;
+  color: var(--argo-foreground) !important;
+  border-radius: var(--radius) !important;
+
+  &:focus { border-color: var(--argo-gold) !important; }
+}
+
+// Checkbox and radio custom appearance
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--argo-gold);
+}
