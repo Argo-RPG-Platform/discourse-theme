@@ -3,22 +3,5 @@
   "about_url": "https://argo.games",
   "license_url": "https://github.com/Argo-RPG-Platform/discourse-theme/blob/main/LICENSE",
   "author": "Argo Games",
-  "component": false,
-  "color_schemes": [
-    {
-      "name": "Argo Dark",
-      "colors": {
-        "primary":            "EDE8DC",
-        "secondary":          "1A1C26",
-        "tertiary":           "FFC64A",
-        "quaternary":         "FFC64A",
-        "header_background":  "151820",
-        "header_primary":     "EDE8DC",
-        "highlight":          "FFC64A",
-        "danger":             "CC2929",
-        "success":            "338055",
-        "love":               "FFC64A"
-      }
-    }
-  ]
+  "component": false
 }
