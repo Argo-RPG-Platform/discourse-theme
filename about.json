@@ -1,6 +1,9 @@
 {
   "name": "Argo Theme",
   "about_url": "https://argo.games",
+  "license_url": "https://github.com/Argo-RPG-Platform/discourse-theme/blob/main/LICENSE",
+  "author": "Argo Games",
+  "component": false,
   "color_schemes": [
     {
       "name": "Argo Dark",
