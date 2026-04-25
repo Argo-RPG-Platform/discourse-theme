@@ -1,10 +1,6 @@
 {
   "name": "Argo Theme",
   "about_url": "https://argo.games",
-  "license_url": null,
-  "assets": {
-    "logo": "assets/logo.webp"
-  },
   "color_schemes": [
     {
       "name": "Argo Dark",
