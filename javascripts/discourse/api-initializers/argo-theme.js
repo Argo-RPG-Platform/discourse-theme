@@ -107,28 +107,14 @@ export default apiInitializer("1.0", (api) => {
   }
 
   // ── Move native header buttons into our nav bar ───────────────────────────
-  // If CSS display:contents on .d-header .contents didn't fully flatten the
-  // layout (varies by Discourse version), we move the native icon buttons
-  // (hamburger, chat, user menu) into #argo-nav at the DOM level so they
-  // appear on the same row as our logo and nav links.
+  // Moves the sidebar-toggle burger, chat icon, and user menu into #argo-nav
+  // on the right side (burger → chat → profile), all after the spacer.
   function integrateNativeHeaderButtons() {
     const inner = document.querySelector(".argo-nav__inner");
     if (!inner) return;
 
     // Already done
     if (inner.querySelector(".argo-native-buttons")) return;
-
-    // Candidates for the right-side icons container (chat, notifications, avatar)
-    const rightSelectors = [
-      ".d-header .header-buttons.end",
-      ".d-header .d-header-icons",
-      ".d-header .panel",
-    ];
-    // Candidates for the left-side hamburger
-    const leftSelectors = [
-      ".d-header .header-buttons.start",
-      ".d-header .hamburger-dropdown",
-    ];
 
     const findOutsideNav = (selectors) => {
       for (const sel of selectors) {
@@ -138,28 +124,36 @@ export default apiInitializer("1.0", (api) => {
       return null;
     };
 
-    const rightEl = findOutsideNav(rightSelectors);
-    const leftEl  = findOutsideNav(leftSelectors);
+    // Sidebar toggle burger — confirmed selector from DOM inspection
+    const burgerEl = findOutsideNav([
+      ".d-header .header-sidebar-toggle",
+      ".d-header .btn-sidebar-toggle",
+      ".d-header .hamburger-dropdown",
+      ".d-header .header-buttons.start",
+    ]);
 
-    // Only act if there is actually a second bar (elements exist outside our nav)
-    if (!rightEl && !leftEl) return;
+    // Chat + notifications + user menu
+    const rightEl = findOutsideNav([
+      ".d-header .header-buttons.end",
+      ".d-header .d-header-icons",
+      ".d-header .panel",
+    ]);
 
-    // Insert hamburger before the logo (leftmost position)
-    if (leftEl) {
-      leftEl.classList.add("argo-native-buttons", "argo-native-buttons--left");
-      inner.insertBefore(leftEl, inner.firstChild);
-    }
+    if (!burgerEl && !rightEl) return;
 
-    // Append right-side icons after the spacer (rightmost position)
-    if (rightEl) {
-      rightEl.classList.add("argo-native-buttons", "argo-native-buttons--right");
-      inner.appendChild(rightEl);
-    }
+    // One container for all three, appended after the spacer
+    const container = document.createElement("div");
+    container.className = "argo-native-buttons argo-native-buttons--right";
 
-    // Hide any now-empty second bar left behind
-    document.querySelectorAll(".d-header .contents, .d-header .wrap > *").forEach((el) => {
-      if (el.id === "argo-nav") return;
-      if (el.children.length === 0 && !el.textContent.trim()) {
+    if (burgerEl) container.appendChild(burgerEl); // burger goes first (leftmost)
+    if (rightEl)  container.appendChild(rightEl);  // chat + profile after
+
+    inner.appendChild(container);
+
+    // Hide any now-empty leftovers in .contents
+    document.querySelectorAll(".d-header .contents > *").forEach((el) => {
+      if (el === burgerEl || el === rightEl) return;
+      if (!el.textContent.trim() && el.children.length === 0) {
         el.style.display = "none";
       }
     });
