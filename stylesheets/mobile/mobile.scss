@@ -1,0 +1,121 @@
+// ============================================================
+// ARGO DISCOURSE THEME — mobile.scss
+// Applied only on mobile (Discourse injects this for mobile UA).
+// ============================================================
+
+
+// ============================================================
+// HEADER / NAV BAR
+// ============================================================
+
+// Tighter padding on small screens
+.argo-nav__inner {
+  padding: 0 10px !important;
+  gap: 4px !important;
+}
+
+// Smaller logo on mobile
+.argo-nav__logo img {
+  height: 28px !important;
+}
+
+// Hide all non-active nav link text labels — icon only on mobile
+// The Forum link (always active) keeps its label; others get icon-only
+.argo-nav__link:not(.argo-nav__link--active) {
+  span { display: none !important; }
+  padding: 6px 8px !important;
+}
+
+// Hide Guilds, Campaigns, Marketplace entirely on mobile
+// (they link to the app — the hamburger menu or a dedicated "App" link is better UX)
+// Only Home and Forum links remain, Forum being the active one
+.argo-nav__link[data-argo-nav="guilds"],
+.argo-nav__link[data-argo-nav="campaigns"],
+.argo-nav__link[data-argo-nav="marketplace"] {
+  display: none !important;
+}
+
+// Home link: show icon only (no text) on mobile
+.argo-nav__link[data-argo-nav="home"] span {
+  display: none !important;
+}
+
+
+// ============================================================
+// CATEGORY CARDS — single column on mobile
+// ============================================================
+.category-list,
+table.category-list {
+  grid-template-columns: 1fr !important;
+  gap: 12px !important;
+}
+
+// Shorter image area on mobile to preserve content visibility
+.category-list-item .category-logo,
+tr.category .category-logo {
+  height: 120px !important;
+}
+
+// Card body tighter padding
+.category-list-item td.category,
+tr.category td.category {
+  padding: 12px !important;
+}
+
+// Topic count chip
+.category-list-item td.topics,
+tr.category td.topics {
+  padding: 0 12px 12px !important;
+}
+
+// Subcategories — hide on mobile to keep cards compact
+.category-list-item .subcategories,
+tr.category .subcategories {
+  display: none !important;
+}
+
+
+// ============================================================
+// TOPIC LIST — hide stat columns on mobile
+// ============================================================
+table.topic-list {
+  .num.posts-map,
+  .num.views,
+  .num.age,
+  .activity,
+  .posters {
+    display: none !important;
+  }
+
+  // Title column takes full width
+  td.main-link {
+    padding: 10px 8px !important;
+  }
+}
+
+
+// ============================================================
+// COMPOSER — full-height on mobile
+// ============================================================
+#reply-control {
+  height: 100% !important;
+  min-height: 250px;
+}
+
+.d-editor-input {
+  font-size: 1rem !important; // prevent iOS auto-zoom on focus
+}
+
+
+// ============================================================
+// MAIN OUTLET — remove horizontal padding on mobile
+// ============================================================
+#main-outlet {
+  padding: 0 8px !important;
+}
+
+.category-list-area,
+.categories-and-latest,
+.category-list {
+  margin-top: 8px;
+}
