@@ -1092,6 +1092,27 @@ a.sidebar-sections__back-to-forum {
   border: 1px solid var(--surface-border) !important;
 }
 
+// Admin config area cards (themes, components, etc.)
+.admin-config-area-card,
+.admin-config-area-card__content,
+.theme-card__content,
+.theme-card__footer {
+  background: var(--argo-card) !important;
+  color: var(--argo-foreground) !important;
+  border-color: var(--surface-border) !important;
+}
+
+.theme-card__title {
+  color: var(--argo-foreground) !important;
+  &:hover { color: var(--argo-gold) !important; }
+}
+
+.theme-card__badge {
+  background: rgba(255,255,255,0.06) !important;
+  color: var(--argo-text-secondary) !important;
+  border-color: var(--surface-border) !important;
+}
+
 // Admin sidebar panel — Discourse's admin CSS overrides our .sidebar-container
 // rule with a white background on .admin-panel / .sidebar-sections
 .admin-panel,
