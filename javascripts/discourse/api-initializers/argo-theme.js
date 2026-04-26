@@ -318,17 +318,20 @@ export default apiInitializer("1.0", (api) => {
     const poweredBy = document.querySelector(".powered-by-discourse");
     if (!poweredBy) return;
 
-    const host =
-      document.querySelector("#main-outlet-wrapper") ||
-      document.querySelector("#main-outlet")?.parentElement;
+    const wrapper = document.querySelector("#main-outlet-wrapper");
+    const host = wrapper?.parentElement || document.querySelector("#main-outlet")?.parentElement;
 
     if (!host) return;
 
-    let slot = host.querySelector(".argo-powered-by-slot");
+    let slot = host.querySelector(":scope > .argo-powered-by-slot");
     if (!slot) {
       slot = document.createElement("div");
       slot.className = "argo-powered-by-slot";
-      host.appendChild(slot);
+      if (wrapper && wrapper.parentElement === host) {
+        wrapper.insertAdjacentElement("afterend", slot);
+      } else {
+        host.appendChild(slot);
+      }
     }
 
     if (poweredBy.parentElement !== slot) {
