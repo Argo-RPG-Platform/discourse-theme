@@ -314,6 +314,28 @@ export default apiInitializer("1.0", (api) => {
     });
   }
 
+  function relocatePoweredByDiscourse() {
+    const poweredBy = document.querySelector(".powered-by-discourse");
+    if (!poweredBy) return;
+
+    const host =
+      document.querySelector("#main-outlet-wrapper") ||
+      document.querySelector("#main-outlet")?.parentElement;
+
+    if (!host) return;
+
+    let slot = host.querySelector(".argo-powered-by-slot");
+    if (!slot) {
+      slot = document.createElement("div");
+      slot.className = "argo-powered-by-slot";
+      host.appendChild(slot);
+    }
+
+    if (poweredBy.parentElement !== slot) {
+      slot.appendChild(poweredBy);
+    }
+  }
+
   // ── Page change handler ───────────────────────────────────────────────────
   // Discourse is an SPA — we must re-run our DOM work after every route change.
   api.onPageChange(() => {
@@ -327,6 +349,7 @@ export default apiInitializer("1.0", (api) => {
       rewriteCategoryTableIfNeeded();
       integrateNativeHeaderButtons();
       watchSidebarToggle();
+      relocatePoweredByDiscourse();
     }, 80);
   });
 
@@ -339,5 +362,6 @@ export default apiInitializer("1.0", (api) => {
     rewriteCategoryTableIfNeeded();
     integrateNativeHeaderButtons();
     watchSidebarToggle();
+    relocatePoweredByDiscourse();
   }, 80);
 });
