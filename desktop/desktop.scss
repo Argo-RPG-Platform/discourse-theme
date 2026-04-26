@@ -82,11 +82,29 @@ table.topic-list {
 // MAIN CONTENT AREA
 // ============================================================
 
-// Generous max-width for the main outlet on desktop
+// Let the desktop shell span the full viewport so the sidebar can sit flush
+// against the left edge while keeping breathing room only inside the content.
+#main-outlet-wrapper.wrap {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding: 0 !important;
+}
+
 #main-outlet {
-  max-width: 1480px;
-  margin: 0 auto;
-  padding: 0 24px;
+  width: 100%;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 24px 24px !important;
+  box-sizing: border-box;
+}
+
+// Topic pages and discovery pages share the same full-width shell.
+.has-sidebar-page #main-outlet,
+.navigation-topics #main-outlet,
+.latest-topic-list #main-outlet,
+.discovery #main-outlet {
+  max-width: none !important;
+  margin-inline: 0 !important;
 }
 
 // Category list gets a bit of top breathing room below the fixed header

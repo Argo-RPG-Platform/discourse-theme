@@ -353,7 +353,7 @@ h1, h2, h3, h4, h5, h6 {
   transition:
     width 280ms cubic-bezier(0.22, 1, 0.36, 1),
     border-color 280ms cubic-bezier(0.22, 1, 0.36, 1) !important;
-  border-right: 1px solid var(--surface-border) !important;
+  border-right: 1px solid rgba(8, 12, 18, 0.72) !important;
 }
 
 body[data-sidebar-open="false"] .sidebar-wrapper {
@@ -374,6 +374,27 @@ body[data-sidebar-open="false"] .sidebar-wrapper {
   transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1) !important;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+#main-outlet-wrapper.wrap {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.has-sidebar-page #main-outlet-wrapper {
+  display: flex !important;
+  align-items: stretch;
+  gap: 0 !important;
+}
+
+#main-outlet {
+  min-width: 0;
+}
+
+.navigation-container {
+  min-width: 0;
 }
 
 body[data-sidebar-open="false"] .sidebar-container,
@@ -431,7 +452,7 @@ body[data-sidebar-open="false"] #d-sidebar {
 
 // Sidebar footer
 .sidebar-footer-wrapper {
-  border-top: 1px solid var(--surface-border) !important;
+  border-top: 1px solid rgba(8, 12, 18, 0.7) !important;
   padding: 8px 10px !important;
   margin-top: 4px;
 }
@@ -1235,4 +1256,38 @@ textarea,
 input[type="checkbox"],
 input[type="radio"] {
   accent-color: var(--argo-gold);
+}
+
+// ============================================================
+// M: DISCOVERY FOOTER / BOTTOM FADE
+// ============================================================
+
+.topic-list-bottom {
+  margin-top: 12px;
+  padding: 24px 0 0 !important;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(26, 28, 38, 0) 0%,
+      rgba(17, 20, 29, 0.72) 48%,
+      rgba(26, 28, 38, 0.96) 100%
+    ) !important;
+  border-top: 1px solid rgba(8, 12, 18, 0.64) !important;
+}
+
+.powered-by-discourse {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  background: rgba(13, 17, 24, 0.58) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  color: var(--argo-text-secondary) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  &:hover {
+    color: var(--argo-foreground) !important;
+    background: rgba(18, 22, 31, 0.74) !important;
+  }
 }
