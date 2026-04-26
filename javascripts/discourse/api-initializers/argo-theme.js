@@ -159,6 +159,28 @@ export default apiInitializer("1.0", (api) => {
     });
   }
 
+  // ── Sidebar collapse direction hook ──────────────────────────────────────
+  // Discourse toggles aria-expanded on the burger button but does not add a
+  // reliable body class for collapsed state. We mirror aria-expanded into
+  // data-sidebar-open on <body> so our CSS can drive the slide-left animation.
+  function watchSidebarToggle() {
+    const burger = document.querySelector(".btn-sidebar-toggle");
+    if (!burger || burger.__argoObserved) return;
+    burger.__argoObserved = true;
+
+    const sync = () =>
+      document.body.setAttribute(
+        "data-sidebar-open",
+        burger.getAttribute("aria-expanded") === "true" ? "true" : "false"
+      );
+
+    sync(); // set initial state
+    new MutationObserver(sync).observe(burger, {
+      attributes: true,
+      attributeFilter: ["aria-expanded"],
+    });
+  }
+
   // ── Page change handler ───────────────────────────────────────────────────
   // Discourse is an SPA — we must re-run our DOM work after every route change.
   api.onPageChange(() => {
@@ -169,6 +191,7 @@ export default apiInitializer("1.0", (api) => {
       applyCategoryImageFallbacks();
       rewriteCategoryTableIfNeeded();
       integrateNativeHeaderButtons();
+      watchSidebarToggle();
     }, 80);
   });
 
@@ -178,5 +201,6 @@ export default apiInitializer("1.0", (api) => {
     applyCategoryImageFallbacks();
     rewriteCategoryTableIfNeeded();
     integrateNativeHeaderButtons();
+    watchSidebarToggle();
   }, 80);
 });

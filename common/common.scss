@@ -340,11 +340,60 @@ h1, h2, h3, h4, h5, h6 {
 // ============================================================
 // D: SIDEBAR
 // ============================================================
-.sidebar-wrapper,
-#sidebar,
-.sidebar-container {
-  background: var(--argo-sidebar-bg) !important;
+
+// Wrapper: clips the sliding inner panel and drives the width animation.
+// When data-sidebar-open="false" the wrapper collapses to 0 width while the
+// inner container simultaneously slides left via transform — same offcanvas
+// pattern used in the Argo WebApp shadcn sidebar.
+.sidebar-wrapper {
+  flex-shrink: 0 !important;
+  width: 240px !important;
+  min-width: 0 !important;        // allows collapse to width:0
+  overflow: hidden !important;
+  transition:
+    width 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 280ms cubic-bezier(0.22, 1, 0.36, 1) !important;
   border-right: 1px solid var(--surface-border) !important;
+}
+
+body[data-sidebar-open="false"] .sidebar-wrapper {
+  width: 0 !important;
+  border-right-color: transparent !important;
+}
+
+// Inner panel: fixed width (doesn't shrink with wrapper), slides left on collapse.
+.sidebar-container,
+#d-sidebar {
+  width: 240px !important;
+  min-width: 240px;
+  background: var(--surface-panel-bg-strong) !important;
+  backdrop-filter: var(--surface-backdrop-blur-strong) !important;
+  -webkit-backdrop-filter: var(--surface-backdrop-blur-strong) !important;
+  border-right: none !important;
+  transform: translateX(0);
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+body[data-sidebar-open="false"] .sidebar-container,
+body[data-sidebar-open="false"] #d-sidebar {
+  transform: translateX(-100%) !important;
+}
+
+// Section group → rounded glass card
+.sidebar-section-wrapper {
+  margin: 4px 10px !important;
+  padding: 4px !important;
+  background: var(--surface-section-bg) !important;
+  border: 1px solid var(--surface-border) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--surface-shadow-soft);
+}
+
+.sidebar-section-header-wrapper {
+  padding: 4px 8px !important;
+  margin-bottom: 2px;
 }
 
 .sidebar-section-header-text {
@@ -358,8 +407,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .sidebar-section-link-wrapper a,
 .sidebar-section-link {
+  padding: 6px 10px !important;
+  margin: 1px 0 !important;
   color: var(--argo-text-secondary) !important;
-  border-radius: var(--radius) !important;
+  border-radius: calc(var(--radius) * 0.75) !important;
   transition:
     color var(--motion-duration-quick) var(--motion-ease-standard),
     background-color var(--motion-duration-quick) var(--motion-ease-standard);
@@ -376,6 +427,13 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .d-icon { color: inherit !important; }
+}
+
+// Sidebar footer
+.sidebar-footer-wrapper {
+  border-top: 1px solid var(--surface-border) !important;
+  padding: 8px 10px !important;
+  margin-top: 4px;
 }
 
 
