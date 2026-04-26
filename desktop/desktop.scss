@@ -47,6 +47,11 @@ table.category-list {
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
 }
 
+body.argo-categories-page .category-list,
+body.argo-categories-page table.category-list {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+}
+
 
 // ============================================================
 // TOPIC LIST
