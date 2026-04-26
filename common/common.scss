@@ -1092,6 +1092,17 @@ a.sidebar-sections__back-to-forum {
   border: 1px solid var(--surface-border) !important;
 }
 
+// Admin sidebar panel — Discourse's admin CSS overrides our .sidebar-container
+// rule with a white background on .admin-panel / .sidebar-sections
+.admin-panel,
+.sidebar-sections,
+.sidebar-sections.admin-panel,
+.sidebar-footer-wrapper,
+.sidebar-footer-container {
+  background: var(--argo-sidebar-bg) !important;
+  color: var(--argo-foreground) !important;
+}
+
 // Admin sidebar panel header
 .sidebar-panel-header { background: transparent !important; }
 
