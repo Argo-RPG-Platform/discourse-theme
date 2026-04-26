@@ -457,6 +457,35 @@ body[data-sidebar-open="false"] #d-sidebar {
   margin-top: 4px;
 }
 
+.sidebar-footer-container {
+  position: relative;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(26, 28, 38, 0) 0%,
+      rgba(14, 18, 25, 0.68) 42%,
+      rgba(10, 13, 19, 0.96) 100%
+    ) !important;
+}
+
+.sidebar-footer-actions {
+  position: relative;
+  z-index: 1;
+}
+
+.sidebar-footer-actions-button {
+  color: var(--argo-text-secondary) !important;
+
+  &:hover {
+    color: var(--argo-foreground) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+  }
+
+  .d-icon {
+    color: inherit !important;
+  }
+}
+
 
 // ============================================================
 // E: CATEGORIES AS CARDS
@@ -1280,16 +1309,25 @@ input[type="radio"] {
   align-items: center;
   padding: 10px 14px;
   border-radius: var(--radius);
-  background: rgba(13, 17, 24, 0.58) !important;
-  border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  color: var(--argo-text-secondary) !important;
+  background: rgba(11, 15, 21, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: var(--argo-foreground) !important;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  text-decoration: none !important;
 
   &:hover {
     color: var(--argo-foreground) !important;
-    background: rgba(18, 22, 31, 0.74) !important;
+    background: rgba(18, 22, 31, 0.98) !important;
   }
+}
+
+.powered-by-discourse__content,
+.powered-by-discourse__logo,
+.powered-by-discourse span,
+.powered-by-discourse .d-icon {
+  color: inherit !important;
+  fill: currentColor !important;
 }
 
 // ============================================================
