@@ -239,6 +239,22 @@ export default apiInitializer("1.0", (api) => {
     table.parentNode.replaceChild(grid, table);
   }
 
+  // ── Move #argo-nav into .d-header .wrap ─────────────────────────────────
+  // Discourse renders header.html via the above-header outlet, so #argo-nav
+  // lands as a sibling ABOVE .d-header-wrap instead of inside it. We move it
+  // into .d-header .wrap so it becomes a proper flex child and the .d-header
+  // glass panel wraps it correctly. Must run before integrateNativeHeaderButtons.
+  function ensureNavInsideHeader() {
+    const nav = document.getElementById("argo-nav");
+    if (!nav) return;
+    if (nav.closest(".d-header")) return; // already in the right place
+
+    const wrap = document.querySelector(".d-header .wrap");
+    if (!wrap) return;
+
+    wrap.insertBefore(nav, wrap.firstChild);
+  }
+
   // ── Move native header buttons into our nav bar ───────────────────────────
   // Moves the sidebar-toggle burger, chat icon, and user menu into #argo-nav
   // on the right side (burger → chat → profile), all after the spacer.
@@ -347,6 +363,7 @@ export default apiInitializer("1.0", (api) => {
 
     // Small delay lets Discourse finish rendering the new route's DOM
     setTimeout(() => {
+      ensureNavInsideHeader();        // must be first — moves #argo-nav into .d-header
       applyCategoryImageFallbacks();
       enhanceCategoriesPageCards();
       rewriteCategoryTableIfNeeded();

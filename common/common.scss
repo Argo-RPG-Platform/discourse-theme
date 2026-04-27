@@ -99,7 +99,9 @@ h1, h2, h3, h4, h5, h6 {
 // C: HEADER
 // ============================================================
 
-// Apply glass panel to the Discourse header container
+// .d-header-wrap is Discourse's sticky header container.
+// JS (ensureNavInsideHeader) moves #argo-nav into .d-header .wrap so it
+// becomes a proper flex child — the glass panel comes from .d-header below.
 .d-header {
   background: var(--surface-panel-bg-strong) !important;
   backdrop-filter: var(--surface-backdrop-blur-strong) !important;
@@ -117,7 +119,7 @@ h1, h2, h3, h4, h5, h6 {
   display: none !important;
 }
 
-// The inner wrap becomes a pure flex container for our nav + native buttons
+// The inner wrap becomes a pure flex container for #argo-nav + native buttons
 .d-header .wrap {
   display: flex !important;
   align-items: center !important;
@@ -134,7 +136,7 @@ h1, h2, h3, h4, h5, h6 {
   display: contents !important;
 }
 
-// Our injected nav: sits between the hamburger (left) and native icons (right)
+// #argo-nav as a flex child inside .d-header .wrap
 #argo-nav {
   flex: 1 1 0% !important;
   height: 60px;
@@ -451,7 +453,7 @@ body[data-sidebar-open="false"] .sidebar-wrapper {
   position: relative;
   background:
     linear-gradient(
-      90deg,
+      180deg,
       rgba(21, 32, 43, 0) 0%,
       rgba(14, 22, 30, 0.68) 42%,
       rgba(10, 17, 24, 0.96) 100%
@@ -464,7 +466,7 @@ body[data-sidebar-open="false"] .sidebar-wrapper {
   inset: 0;
   background:
     linear-gradient(
-      90deg,
+      180deg,
       rgba(255, 255, 255, 0) 0%,
       rgba(17, 28, 38, 0.18) 32%,
       rgba(10, 17, 24, 0.82) 100%
