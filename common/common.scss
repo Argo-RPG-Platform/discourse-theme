@@ -1402,11 +1402,17 @@ label.form-kit__container-title {
   color: var(--argo-foreground) !important;
 }
 
-// Any remaining raw <p>, <label>, <span> inside form-kit that slip through
+// Root color on the form itself — all children inherit unless overridden
+.form-kit {
+  color: var(--argo-foreground) !important;
+}
+
+// Any remaining raw <p>, <label>, <span>, <div> inside form-kit that slip through
 .form-kit p,
 .form-kit label,
+.form-kit div:not([class*="d-icon"]),
 .form-kit span:not([class*="d-icon"]):not(.badge-category__name) {
-  color: inherit;
+  color: var(--argo-foreground) !important;
 }
 
 // ============================================================
