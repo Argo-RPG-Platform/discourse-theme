@@ -524,7 +524,7 @@ tr.category {
   flex-direction: column !important;
   background: var(--surface-panel-bg) !important;
   border: 1px solid var(--surface-border) !important;
-  border-radius: var(--radius) !important;
+  border-radius: 16px !important;
   overflow: hidden !important;
   box-shadow: var(--surface-shadow-soft);
   backdrop-filter: var(--surface-backdrop-blur);
@@ -536,7 +536,7 @@ tr.category {
   cursor: pointer;
 
   &:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px);
     border-color: var(--surface-border-strong) !important;
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.05),
@@ -561,12 +561,48 @@ tr.category .category-logo {
   overflow: hidden !important;
   flex-shrink: 0;
   background: var(--argo-muted);
+  border-radius: 16px 16px 0 0;
+  position: relative;
 
   img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
     display: block !important;
+  }
+}
+
+// Hero cards — game system categories: taller image, themed accent
+.category-list-item[data-category-type="game-system"],
+tr.category[data-category-type="game-system"] {
+  .category-logo {
+    height: 240px !important;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 4px;
+      background: var(--card-accent, var(--argo-gold));
+    }
+  }
+
+  .category-name,
+  a.category-name {
+    color: var(--card-accent, var(--argo-gold)) !important;
+
+    &:hover {
+      color: var(--card-accent, var(--argo-gold)) !important;
+      filter: brightness(1.15);
+    }
+  }
+
+  &:hover {
+    border-color: var(--card-accent, var(--argo-gold)) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      0 0 0 1px var(--card-accent, var(--argo-gold)),
+      0 20px 60px rgba(0, 0, 0, 0.35);
   }
 }
 
@@ -1472,4 +1508,29 @@ body.argo-categories-page tr.category .num.topics a {
 body.argo-categories-page .category-list-item .subcategories,
 body.argo-categories-page tr.category .subcategories {
   padding: 0 18px 18px !important;
+}
+
+
+// ============================================================
+// O: HERO CARD OVERRIDES — game system categories on /categories
+// ============================================================
+
+body.argo-categories-page .category-list-item[data-category-type="game-system"],
+body.argo-categories-page tr.category[data-category-type="game-system"] {
+  .category-logo {
+    height: 280px !important;
+  }
+
+  .category-name,
+  a.category-name {
+    font-size: 1.3rem !important;
+  }
+
+  &:hover {
+    border-color: var(--card-accent, var(--argo-gold)) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 0 0 1px var(--card-accent, var(--argo-gold)),
+      0 28px 64px rgba(0, 0, 0, 0.42);
+  }
 }

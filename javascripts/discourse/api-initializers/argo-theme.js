@@ -355,6 +355,38 @@ export default apiInitializer("1.0", (api) => {
     }
   }
 
+  // ── Game system category tagging ─────────────────────────────────────────
+  const GAME_SYSTEM_ACCENTS = {
+    "dnd":             "#7B3FBE",
+    "forbidden-lands": "#8E3342",
+    "cosmere":         "#F0A030",
+    "pathfinder":      "#C54820",
+    "call-of-cthulhu": "#2E5E4E",
+  };
+
+  function tagGameSystemCards() {
+    document.querySelectorAll(".category-list-item, tr.category").forEach((card) => {
+      const link = card.querySelector("a.category-name, td.category a");
+      if (!link) return;
+
+      const href = link.getAttribute("href") || "";
+      const slugMatch = href.match(/\/c\/([^/]+)/);
+      const slug = slugMatch?.[1] || "";
+
+      const matchedSlug = Object.keys(GAME_SYSTEM_ACCENTS).find(
+        (s) => slug === s || slug.startsWith(s + "-")
+      );
+
+      if (matchedSlug) {
+        card.setAttribute("data-category-type", "game-system");
+        card.style.setProperty("--card-accent", GAME_SYSTEM_ACCENTS[matchedSlug]);
+      } else {
+        card.removeAttribute("data-category-type");
+        card.style.removeProperty("--card-accent");
+      }
+    });
+  }
+
   // ── Page change handler ───────────────────────────────────────────────────
   // Discourse is an SPA — we must re-run our DOM work after every route change.
   api.onPageChange(() => {
@@ -364,6 +396,7 @@ export default apiInitializer("1.0", (api) => {
     // Small delay lets Discourse finish rendering the new route's DOM
     setTimeout(() => {
       ensureNavInsideHeader();        // must be first — moves #argo-nav into .d-header
+      tagGameSystemCards();
       applyCategoryImageFallbacks();
       enhanceCategoriesPageCards();
       rewriteCategoryTableIfNeeded();
@@ -377,6 +410,8 @@ export default apiInitializer("1.0", (api) => {
   syncNavActiveState();
   syncCategoriesPageState();
   setTimeout(() => {
+    ensureNavInsideHeader();
+    tagGameSystemCards();
     applyCategoryImageFallbacks();
     enhanceCategoriesPageCards();
     rewriteCategoryTableIfNeeded();

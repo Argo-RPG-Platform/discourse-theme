@@ -52,6 +52,12 @@ body.argo-categories-page table.category-list {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
 }
 
+// Hero cards span 2 grid columns on desktop
+.category-list-item[data-category-type="game-system"],
+tr.category[data-category-type="game-system"] {
+  grid-column: span 2;
+}
+
 
 // ============================================================
 // TOPIC LIST
