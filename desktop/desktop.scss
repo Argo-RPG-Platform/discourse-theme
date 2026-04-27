@@ -76,13 +76,13 @@ table.topic-list {
 // SIDEBAR — Fixed full-height left panel (UE-forum style)
 // ============================================================
 
-// Sidebar: detach from document flow, pin to the left edge of the viewport.
-// z-index: 200 — well below the header (1001) so it never covers the nav.
+// Sidebar: fixed to the left edge, starting BELOW the 60px header.
+// top: 60px guarantees the header is never geometrically covered — no z-index fight needed.
 .sidebar-wrapper {
   position: fixed !important;
   left: 0 !important;
-  top: 0 !important;
-  height: 100vh !important;
+  top: 60px !important;
+  height: calc(100vh - 60px) !important;
   width: 240px !important;
   z-index: 200;
 }
@@ -90,24 +90,6 @@ table.topic-list {
 // Collapsed: slide sidebar off-screen to the left.
 body[data-sidebar-open="false"] .sidebar-wrapper {
   transform: translateX(-240px) !important;
-}
-
-// Header: shift right so it starts at the sidebar's right edge.
-// Target both .d-header-wrap and .d-header — Discourse may fix-position either one.
-.d-header-wrap,
-.d-header {
-  left: 240px !important;
-  width: calc(100% - 240px) !important;
-  z-index: 1001 !important;
-  transition:
-    left var(--motion-duration-deliberate) var(--motion-ease-standard),
-    width var(--motion-duration-deliberate) var(--motion-ease-standard);
-}
-
-body[data-sidebar-open="false"] .d-header-wrap,
-body[data-sidebar-open="false"] .d-header {
-  left: 0 !important;
-  width: 100% !important;
 }
 
 // ============================================================
