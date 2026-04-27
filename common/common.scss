@@ -345,6 +345,7 @@ h1, h2, h3, h4, h5, h6 {
 // Desktop overrides (position: fixed, push layout) live in desktop.scss.
 // Mobile overrides (overlay, no content push) live in mobile.scss.
 .sidebar-wrapper {
+  background: var(--argo-sidebar-bg) !important;  // prevents white flash during slide animation
   overflow: hidden !important;
   border-right: 1px solid var(--surface-border) !important;
   transition:
