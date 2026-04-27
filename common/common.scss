@@ -1314,6 +1314,101 @@ a.sidebar-sections__back-to-forum {
   color: inherit;
 }
 
+// ── d-nav-submenu tabs (category edit: General / Security / Appearance …)
+.d-nav-submenu .nav-pills li a,
+.d-nav-submenu__tabs li a {
+  color: var(--argo-text-secondary) !important;
+  text-decoration: none !important;
+  border-radius: var(--radius) !important;
+  padding: 6px 12px !important;
+  transition:
+    color var(--motion-duration-quick) var(--motion-ease-standard),
+    background-color var(--motion-duration-quick) var(--motion-ease-standard);
+
+  &:hover {
+    color: var(--argo-foreground) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+  }
+}
+
+.d-nav-submenu .nav-pills li.active a,
+.d-nav-submenu .nav-pills li a.active,
+.d-nav-submenu__tabs li.active a,
+.d-nav-submenu__tabs li a.active {
+  color: var(--argo-gold) !important;
+  background: var(--surface-accent-bg) !important;
+  font-weight: 600;
+}
+
+// ── form-kit (category edit form, admin settings forms)
+// Discourse's form-kit uses its own CSS variables that resolve to light-mode
+// values. Override everything to use our dark tokens.
+.form-kit__container-title,
+label.form-kit__container-title {
+  color: var(--argo-foreground) !important;
+  font-weight: 500;
+}
+
+.form-kit__container-subtitle,
+.form-kit-text,
+.form-kit__helper-text {
+  color: var(--argo-text-secondary) !important;
+}
+
+.form-kit__container-optional {
+  color: var(--argo-text-secondary) !important;
+  opacity: 0.7;
+}
+
+.form-kit__container,
+.form-kit__field {
+  border-color: var(--surface-border) !important;
+}
+
+.form-kit__section-title {
+  color: var(--argo-foreground) !important;
+  font-family: var(--font-brand);
+}
+
+// form-kit inputs / selects inherit from section K but need the wrapper too
+.form-kit__control-input-wrapper,
+.form-kit__control-select {
+  color: var(--argo-foreground) !important;
+}
+
+// image upload area
+.form-kit__control-image {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px dashed var(--surface-border-strong) !important;
+  border-radius: var(--radius) !important;
+  color: var(--argo-text-secondary) !important;
+}
+
+// Color picker label and swatches text
+.form-kit__control-color-input-prefix {
+  color: var(--argo-text-secondary) !important;
+}
+
+// horizontal-overflow-nav background (the tab strip container)
+.horizontal-overflow-nav {
+  background: transparent !important;
+}
+
+// Edit-category page wrapper — Discourse renders this as a light panel
+.edit-category-content,
+.edit-category-tab,
+.edit-category-form {
+  background: transparent !important;
+  color: var(--argo-foreground) !important;
+}
+
+// Any remaining raw <p>, <label>, <span> inside form-kit that slip through
+.form-kit p,
+.form-kit label,
+.form-kit span:not([class*="d-icon"]):not(.badge-category__name) {
+  color: inherit;
+}
+
 // ============================================================
 // K: INPUT FIELDS AND FORMS
 // ============================================================
