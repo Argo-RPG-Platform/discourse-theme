@@ -393,15 +393,18 @@ body[data-sidebar-open="false"] .sidebar-wrapper {
 .navigation-container {
   display: flex !important;
   align-items: center;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 8px;
   min-width: 0;
-  overflow: hidden; // clips internal overflow so it never escapes to page scroll
+  overflow: hidden; // final safety net if a child misbehaves
 }
 
 // Breadcrumb dropdowns — fixed width, never shrink
 .category-breadcrumb {
-  flex-shrink: 0;
+  display: flex;
+  flex: 0 1 auto;
+  min-width: 0;
+  margin: 0;
 }
 
 // list-controls container — must not create horizontal scroll
@@ -1814,9 +1817,13 @@ body.argo-categories-page tr.category[data-category-type="game-system"] {
 // flex: 1 1 auto lets it grow to fill space but also shrink so .navigation-controls
 // is never pushed off screen regardless of sidebar state.
 #navigation-bar.nav-pills {
+  display: flex;
+  flex-wrap: wrap;
   flex: 1 1 auto;
   min-width: 0;
+  margin: 0;
   overflow: hidden;
+  row-gap: 6px;
 
   li a {
     color: var(--argo-text-secondary) !important;
@@ -1849,8 +1856,29 @@ body.argo-categories-page tr.category[data-category-type="game-system"] {
 
 // Navigation controls: ensure "New Category" + "New Topic" buttons stay visible
 .navigation-controls {
-  flex-shrink: 0;
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
+  margin-left: auto;
+  justify-content: flex-end;
+  max-width: 100%;
+}
+
+.navigation-controls .row.dismiss-container-top {
+  display: none;
+}
+
+// When the sidebar reduces the discovery width, let the controls drop to a new
+// row instead of forcing a page-level horizontal overflow.
+@media (max-width: 1200px) {
+  .navigation-container {
+    align-items: flex-start;
+  }
+
+  .navigation-controls {
+    flex-basis: 100%;
+    width: 100%;
+  }
 }
