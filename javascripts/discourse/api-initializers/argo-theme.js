@@ -401,15 +401,23 @@ export default apiInitializer("1.0", (api) => {
   //   [Card grid: Announcements | Roadmap | Devlogs | …]
   //   [Section header: Argo Apps]
   //   [Card grid: Getting Started | Web App | …]
-  function buildSubcategoryLayout() {
+  // buildSubcategoryLayout may be called with a retry count when rows haven't
+  // rendered yet (e.g. on a full page reload where Ember renders async).
+  function buildSubcategoryLayout(retryCount = 0) {
     if (!document.body.classList.contains("argo-categories-page")) return;
 
-    // Remove any previous injection (SPA navigation re-renders the page)
+    // Remove any previous injection so we always start clean
     document.querySelector(".argo-category-sections")?.remove();
 
+    // Un-hide any table we may have hidden in a previous run that Ember didn't
+    // replace (Glimmer sometimes reuses the same DOM node and strips inline
+    // styles, but just in case it doesn't, we clear it here first)
+    document.querySelectorAll("table.category-list[style*='display']").forEach((t) => {
+      t.style.removeProperty("display");
+    });
+
     const categoryList = document.querySelector(
-      "table.category-list:not([style*='display: none']), " +
-      ".category-list:not(.argo-subcategory-grid):not([style*='display: none'])"
+      "table.category-list, .category-list:not(.argo-subcategory-grid)"
     );
     if (!categoryList) return;
 
@@ -419,7 +427,15 @@ export default apiInitializer("1.0", (api) => {
     const rows = Array.from(
       categoryList.querySelectorAll("tr[data-category-id], .category-list-item[data-category-id]")
     );
-    if (!rows.length) return;
+
+    // Ember sometimes fires page:changed before rows are rendered. Retry up to
+    // 5 times (every 120 ms) before giving up.
+    if (!rows.length) {
+      if (retryCount < 5) {
+        setTimeout(() => buildSubcategoryLayout(retryCount + 1), 120);
+      }
+      return;
+    }
 
     const container = document.createElement("div");
     container.className = "argo-category-sections";
@@ -576,12 +592,15 @@ export default apiInitializer("1.0", (api) => {
     }, 80);
   });
 
-  // Initial run on first boot
+  // Initial run on first boot.
+  // buildSubcategoryLayout() is intentionally omitted here — running it at
+  // 80 ms conflicts with Ember's own first render (~200-500 ms later), which
+  // strips our injected DOM and hides the table. We rely on api.onPageChange()
+  // (which fires after Ember finishes rendering) to call it instead.
   syncNavActiveState();
   syncCategoriesPageState();
   setTimeout(() => {
     ensureNavInsideHeader();
-    buildSubcategoryLayout();
     tagGameSystemCards();
     applyCategoryImageFallbacks();
     enhanceCategoriesPageCards();
