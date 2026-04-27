@@ -366,15 +366,17 @@ export default apiInitializer("1.0", (api) => {
 
   function tagGameSystemCards() {
     document.querySelectorAll(".category-list-item, tr.category").forEach((card) => {
-      const link = card.querySelector("a.category-name, td.category a");
+      const link = card.querySelector("a.category-name, td.category a, a.category-title-link");
       if (!link) return;
 
       const href = link.getAttribute("href") || "";
-      const slugMatch = href.match(/\/c\/([^/]+)/);
-      const slug = slugMatch?.[1] || "";
+      // Check ALL non-numeric slug segments so subcategory URLs (/c/parent/sub/id) match too
+      const pathSegments = (href.match(/\/c\/(.+)/)?.[1] || "")
+        .split("/")
+        .filter((s) => !/^\d+$/.test(s));
 
       const matchedSlug = Object.keys(GAME_SYSTEM_ACCENTS).find(
-        (s) => slug === s || slug.startsWith(s + "-")
+        (s) => pathSegments.some((seg) => seg === s || seg.startsWith(s + "-"))
       );
 
       if (matchedSlug) {
@@ -387,6 +389,167 @@ export default apiInitializer("1.0", (api) => {
     });
   }
 
+  // ── Subcategory section layout ────────────────────────────────────────────
+  // On /categories, transforms the flat category table into:
+  //   [Section header: Argo Official]
+  //   [Card grid: Announcements | Roadmap | Devlogs | …]
+  //   [Section header: Argo Apps]
+  //   [Card grid: Getting Started | Web App | …]
+  function buildSubcategoryLayout() {
+    if (!document.body.classList.contains("argo-categories-page")) return;
+
+    // Remove any previous injection (SPA navigation re-renders the page)
+    document.querySelector(".argo-category-sections")?.remove();
+
+    const categoryList = document.querySelector(
+      "table.category-list:not([style*='display: none']), " +
+      ".category-list:not(.argo-subcategory-grid):not([style*='display: none'])"
+    );
+    if (!categoryList) return;
+
+    const allCategories = getSiteCategories();
+    const categoriesById = new Map(allCategories.map((c) => [String(c.id), c]));
+
+    const rows = Array.from(
+      categoryList.querySelectorAll("tr[data-category-id], .category-list-item[data-category-id]")
+    );
+    if (!rows.length) return;
+
+    const container = document.createElement("div");
+    container.className = "argo-category-sections";
+
+    let hasContent = false;
+
+    rows.forEach((row) => {
+      const categoryId = row.getAttribute("data-category-id");
+      const subcategoryBadges = Array.from(
+        row.querySelectorAll(".subcategories .badge-category__wrapper")
+      );
+
+      // Skip leaf categories (Staff, General, Site Feedback — no subcategories)
+      if (!subcategoryBadges.length) return;
+
+      hasContent = true;
+
+      // ── Section header ───────────────────────────────────────────
+      const titleLink = row.querySelector(".category-title-link");
+      const sectionName = row.querySelector(".badge-category__name")?.textContent?.trim() || "";
+      const sectionHref = titleLink?.getAttribute("href") || "#";
+      const parentCat = categoriesById.get(categoryId);
+
+      const badgeStyle = titleLink?.closest("span")?.querySelector(".badge-category__wrapper")?.getAttribute("style")
+        || row.querySelector(".category > h3 .badge-category__wrapper")?.getAttribute("style")
+        || "";
+      const colorMatch = badgeStyle.match(/--category-badge-color:\s*([^;]+)/);
+      const accentColor = colorMatch?.[1]?.trim() || null;
+
+      const header = document.createElement("div");
+      header.className = "argo-section-header";
+      header.dataset.categoryId = categoryId;
+      if (accentColor) header.style.setProperty("--section-accent", accentColor);
+
+      const titleEl = document.createElement("a");
+      titleEl.className = "argo-section-header__title";
+      titleEl.href = sectionHref;
+      titleEl.textContent = sectionName;
+      header.appendChild(titleEl);
+
+      if (parentCat?.description_excerpt) {
+        const desc = document.createElement("p");
+        desc.className = "argo-section-header__desc";
+        desc.textContent = parentCat.description_excerpt;
+        header.appendChild(desc);
+      }
+
+      container.appendChild(header);
+
+      // ── Subcategory card grid ────────────────────────────────────
+      const grid = document.createElement("div");
+      grid.className = "category-list argo-subcategory-grid";
+
+      subcategoryBadges.forEach((badge) => {
+        const badgeSpan = badge.querySelector(".badge-category");
+        const subId = badgeSpan?.getAttribute("data-category-id") || "";
+        const subName = badge.querySelector(".badge-category__name")?.textContent?.trim() || "";
+        const subHref = badge.getAttribute("href") || "#";
+        const subCat = subId ? categoriesById.get(subId) : null;
+        const imageUrl = subCat ? resolveCategoryImageUrl(subCat) : null;
+
+        const subBadgeStyle = badge.getAttribute("style") || "";
+        const subColorMatch = subBadgeStyle.match(/--category-badge-color:\s*([^;]+)/);
+        const subAccent = subColorMatch?.[1]?.trim() || null;
+
+        const card = document.createElement("div");
+        card.className = "category-list-item";
+        if (subId) card.setAttribute("data-category-id", subId);
+        if (subAccent) card.style.setProperty("--subcategory-color", subAccent);
+        card.addEventListener("click", (e) => {
+          if (e.target.closest("a")) return;
+          window.location.href = subHref;
+        });
+
+        // Logo / banner area
+        const logoDiv = document.createElement("div");
+        logoDiv.className = "category-logo";
+        if (imageUrl) {
+          card.dataset.imageKind = "background";
+          card.style.setProperty("--argo-category-card-image", `url("${imageUrl}")`);
+        } else {
+          card.setAttribute("data-no-image", "true");
+        }
+        card.appendChild(logoDiv);
+
+        // Card body
+        const bodyDiv = document.createElement("div");
+        bodyDiv.className = "category";
+
+        const nameEl = document.createElement("h3");
+        nameEl.className = "category-name";
+        const nameLink = document.createElement("a");
+        nameLink.className = "category-name";
+        nameLink.href = subHref;
+        nameLink.textContent = subName;
+        nameEl.appendChild(nameLink);
+        bodyDiv.appendChild(nameEl);
+
+        if (subCat?.description_excerpt) {
+          const descDiv = document.createElement("div");
+          descDiv.className = "category-description";
+          const p = document.createElement("p");
+          p.textContent = subCat.description_excerpt;
+          descDiv.appendChild(p);
+          bodyDiv.appendChild(descDiv);
+        }
+
+        card.appendChild(bodyDiv);
+
+        // Topic count chip
+        if (subCat?.topic_count != null) {
+          const topicDiv = document.createElement("div");
+          topicDiv.className = "topics";
+          const numSpan = document.createElement("span");
+          numSpan.className = "num topics";
+          const topicLink = document.createElement("a");
+          topicLink.href = subHref;
+          topicLink.className = "value";
+          topicLink.textContent = subCat.topic_count;
+          numSpan.appendChild(topicLink);
+          topicDiv.appendChild(numSpan);
+          card.appendChild(topicDiv);
+        }
+
+        grid.appendChild(card);
+      });
+
+      container.appendChild(grid);
+    });
+
+    if (!hasContent) return;
+
+    categoryList.parentNode.insertBefore(container, categoryList);
+    categoryList.style.display = "none";
+  }
+
   // ── Page change handler ───────────────────────────────────────────────────
   // Discourse is an SPA — we must re-run our DOM work after every route change.
   api.onPageChange(() => {
@@ -396,6 +559,7 @@ export default apiInitializer("1.0", (api) => {
     // Small delay lets Discourse finish rendering the new route's DOM
     setTimeout(() => {
       ensureNavInsideHeader();        // must be first — moves #argo-nav into .d-header
+      buildSubcategoryLayout();       // sections + subcategory cards before tagging/fallbacks
       tagGameSystemCards();
       applyCategoryImageFallbacks();
       enhanceCategoriesPageCards();
@@ -411,6 +575,7 @@ export default apiInitializer("1.0", (api) => {
   syncCategoriesPageState();
   setTimeout(() => {
     ensureNavInsideHeader();
+    buildSubcategoryLayout();
     tagGameSystemCards();
     applyCategoryImageFallbacks();
     enhanceCategoriesPageCards();
