@@ -74,6 +74,12 @@ export default apiInitializer("1.0", (api) => {
 
     const customFields = category.custom_fields || {};
     const candidates = [
+      // Newer Discourse format: { id, url, width, height } objects
+      category.uploaded_background?.url,
+      category.uploaded_background_dark?.url,
+      category.uploaded_logo?.url,
+      category.uploaded_logo_dark?.url,
+      // Older flat string format
       category.uploaded_background_url,
       category.background_url,
       customFields.uploaded_background_url,
