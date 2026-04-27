@@ -739,9 +739,24 @@ table.topic-list {
 .topic-list-item {
   border-bottom: 1px solid var(--surface-border) !important;
   background: transparent !important;
+  position: relative;
   transition: background-color var(--motion-duration-quick) var(--motion-ease-standard);
 
-  &:hover { background: rgba(255, 255, 255, 0.03) !important; }
+  &:hover {
+    background: var(--surface-section-bg) !important;
+
+    // Gold left-edge bar on hover
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--argo-gold);
+      border-radius: 2px;
+    }
+  }
 
   td { background: transparent !important; }
 
@@ -752,16 +767,18 @@ table.topic-list {
   .raw-topic-link {
     color: var(--argo-foreground) !important;
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 0.9375rem;
+    line-height: 1.4;
     text-decoration: none !important;
 
     &:hover { color: var(--argo-gold) !important; }
   }
 
-  // Visited (read) topics — slightly dimmer
+  // Visited (read) topics — dimmer to contrast with unread
   &.visited .title a,
-  &.visited .topic-title a {
-    color: var(--argo-text-secondary) !important;
+  &.visited .topic-title a,
+  &.visited .raw-topic-link {
+    opacity: 0.55;
     font-weight: 400;
   }
 
@@ -784,6 +801,9 @@ table.topic-list {
   .activity {
     color: var(--argo-text-secondary) !important;
     font-size: 0.8125rem;
+    opacity: 0.65;
+    min-width: 40px;
+    text-align: center;
   }
 }
 
@@ -791,6 +811,14 @@ table.topic-list {
 // ============================================================
 // G: BUTTONS
 // ============================================================
+.btn {
+  transition:
+    background-color var(--motion-duration-quick) var(--motion-ease-standard),
+    border-color var(--motion-duration-quick) var(--motion-ease-standard),
+    transform var(--motion-duration-quick) var(--motion-ease-standard),
+    box-shadow var(--motion-duration-quick) var(--motion-ease-standard);
+}
+
 .btn-primary,
 .btn.btn-primary {
   background: var(--argo-gold) !important;
@@ -800,6 +828,7 @@ table.topic-list {
   font-family: var(--font-body) !important;
   font-weight: 600 !important;
   font-size: 0.875rem !important;
+  padding: 8px 18px !important;
   letter-spacing: 0.01em;
   transition:
     background-color var(--motion-duration-quick) var(--motion-ease-standard),
@@ -958,7 +987,7 @@ table.topic-list {
 .modal-body {
   background: var(--argo-card) !important;
   border: 1px solid var(--surface-border-strong) !important;
-  border-radius: calc(var(--radius) * 2) !important;
+  border-radius: 18px !important;
   box-shadow: var(--surface-shadow) !important;
   color: var(--argo-foreground);
 }
@@ -981,7 +1010,7 @@ table.topic-list {
 .menu-panel {
   background: var(--argo-card) !important;
   border: 1px solid var(--surface-border-strong) !important;
-  border-radius: var(--radius) !important;
+  border-radius: 12px !important;
   box-shadow: var(--surface-shadow) !important;
 
   .item a,
