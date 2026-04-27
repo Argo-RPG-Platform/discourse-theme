@@ -391,7 +391,24 @@ body[data-sidebar-open="false"] .sidebar-wrapper {
 }
 
 .navigation-container {
+  display: flex !important;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 8px;
   min-width: 0;
+  overflow: hidden; // clips internal overflow so it never escapes to page scroll
+}
+
+// Breadcrumb dropdowns — fixed width, never shrink
+.category-breadcrumb {
+  flex-shrink: 0;
+}
+
+// list-controls container — must not create horizontal scroll
+.list-controls,
+.list-controls .container {
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 // Section group → rounded glass card
@@ -1794,7 +1811,13 @@ body.argo-categories-page tr.category[data-category-type="game-system"] {
 // ============================================================
 
 // Main topic-view pills (Latest, New, Hot, Categories)
+// flex: 1 1 auto lets it grow to fill space but also shrink so .navigation-controls
+// is never pushed off screen regardless of sidebar state.
 #navigation-bar.nav-pills {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+
   li a {
     color: var(--argo-text-secondary) !important;
     border-radius: var(--radius) !important;
