@@ -409,15 +409,13 @@ export default apiInitializer("1.0", (api) => {
     // Remove any previous injection so we always start clean
     document.querySelector(".argo-category-sections")?.remove();
 
-    // Un-hide any table we may have hidden in a previous run that Ember didn't
-    // replace (Glimmer sometimes reuses the same DOM node and strips inline
-    // styles, but just in case it doesn't, we clear it here first)
-    document.querySelectorAll("table.category-list[style*='display']").forEach((t) => {
-      t.style.removeProperty("display");
+    // Un-hide any table we may have hidden in a previous run
+    document.querySelectorAll("table.category-list.argo-hidden, .category-list.argo-hidden").forEach((t) => {
+      t.classList.remove("argo-hidden");
     });
 
     const categoryList = document.querySelector(
-      "table.category-list, .category-list:not(.argo-subcategory-grid)"
+      "table.category-list:not(.argo-hidden), .category-list:not(.argo-subcategory-grid):not(.argo-hidden)"
     );
     if (!categoryList) return;
 
@@ -569,7 +567,7 @@ export default apiInitializer("1.0", (api) => {
     if (!hasContent) return;
 
     categoryList.parentNode.insertBefore(container, categoryList);
-    categoryList.style.display = "none";
+    categoryList.classList.add("argo-hidden");
   }
 
   // ── Page change handler ───────────────────────────────────────────────────

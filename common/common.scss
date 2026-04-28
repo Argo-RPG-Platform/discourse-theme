@@ -527,6 +527,12 @@ body[data-sidebar-open="false"] .sidebar-wrapper {
 // Convert the default <table> layout to a responsive card grid.
 // ============================================================
 
+// Table hidden by buildSubcategoryLayout() — must beat display:grid !important below
+table.category-list.argo-hidden,
+.category-list.argo-hidden {
+  display: none !important;
+}
+
 // Outer table → CSS grid
 .category-list,
 table.category-list {
