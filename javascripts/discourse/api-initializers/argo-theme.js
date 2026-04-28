@@ -340,9 +340,18 @@ export default apiInitializer("1.0", (api) => {
     const poweredBy = document.querySelector(".powered-by-discourse");
     if (!poweredBy) return;
 
+    // Prefer the custom footer's built-in powered-by slot
+    const footerSlot = document.querySelector(".argo-footer__powered-by-slot");
+    if (footerSlot) {
+      if (poweredBy.parentElement !== footerSlot) {
+        footerSlot.appendChild(poweredBy);
+      }
+      return;
+    }
+
+    // Fallback: create a standalone slot after #main-outlet-wrapper
     const wrapper = document.querySelector("#main-outlet-wrapper");
     const host = wrapper?.parentElement || document.querySelector("#main-outlet")?.parentElement;
-
     if (!host) return;
 
     let slot = host.querySelector(":scope > .argo-powered-by-slot");

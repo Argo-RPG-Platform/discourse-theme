@@ -144,3 +144,25 @@ body[data-sidebar-open="false"] #main-outlet-wrapper.wrap {
 .category-list {
   margin-top: 16px;
 }
+
+
+// ============================================================
+// FOOTER + POWERED-BY SLOT — Sidebar-aware layout
+// Mirrors the #main-outlet-wrapper margin shift.
+// ============================================================
+
+.argo-footer,
+.argo-powered-by-slot {
+  margin-left: 240px;
+  width: calc(100% - 240px);
+  box-sizing: border-box;
+  transition:
+    margin-left var(--motion-duration-deliberate) var(--motion-ease-standard),
+    width var(--motion-duration-deliberate) var(--motion-ease-standard);
+}
+
+body[data-sidebar-open="false"] .argo-footer,
+body[data-sidebar-open="false"] .argo-powered-by-slot {
+  margin-left: 0 !important;
+  width: 100% !important;
+}

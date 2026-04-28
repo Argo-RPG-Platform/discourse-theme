@@ -1897,3 +1897,195 @@ body.argo-categories-page tr.category[data-category-type="game-system"] {
     width: 100%;
   }
 }
+
+
+// ============================================================
+// R: CUSTOM FOOTER — mirrors landing page __footer + __utilities
+// ============================================================
+
+.argo-footer {
+  width: 100%;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, var(--argo-bg) 0%, rgba(10, 15, 22, 0.98) 100%);
+  border-top: 1px solid var(--surface-border);
+}
+
+// ── Main body (logo + nav) ────────────────────────────────────
+
+.argo-footer__main {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 48px;
+  padding: 48px 24px 28px;
+}
+
+.argo-footer__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.argo-footer__logo-link {
+  display: inline-block;
+  opacity: 0.88;
+  transition: opacity var(--motion-duration-quick) var(--motion-ease-standard);
+
+  &:hover { opacity: 1; }
+}
+
+.argo-footer__logo {
+  width: 160px;
+  height: auto;
+  display: block;
+}
+
+.argo-footer__tagline {
+  font-family: var(--font-brand-condensed);
+  font-weight: 200;
+  font-size: 2rem;
+  color: var(--argo-foreground);
+  margin: 0;
+  line-height: 1.1;
+}
+
+.argo-footer__contact-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 22px;
+  border-radius: 8px;
+  border: 1px solid var(--surface-border-strong);
+  background: transparent;
+  color: var(--argo-foreground) !important;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none !important;
+  transition:
+    border-color var(--motion-duration-quick) var(--motion-ease-standard),
+    background var(--motion-duration-quick) var(--motion-ease-standard);
+
+  &:hover {
+    border-color: var(--argo-gold);
+    background: rgba(255, 198, 74, 0.06);
+    color: var(--argo-foreground) !important;
+    text-decoration: none !important;
+  }
+}
+
+.argo-footer__nav {
+  flex: 1;
+  padding-top: 4px;
+}
+
+.argo-footer__nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+
+  li a {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--argo-text-secondary) !important;
+    text-decoration: none !important;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: color var(--motion-duration-quick) var(--motion-ease-standard);
+
+    &:hover { color: var(--argo-foreground) !important; }
+  }
+}
+
+// ── Utilities bar (copyright + policies + social) ─────────────
+
+.argo-footer__utilities {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  padding: 14px 24px 20px;
+  border-top: 1px solid var(--surface-border);
+  background: rgba(8, 13, 20, 0.4);
+}
+
+.argo-footer__copyright {
+  font-size: 0.75rem;
+  color: var(--argo-muted);
+  white-space: nowrap;
+}
+
+.argo-footer__policies {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  flex: 1;
+  min-width: 0;
+
+  a {
+    font-size: 0.75rem;
+    color: var(--argo-muted) !important;
+    text-decoration: none !important;
+    transition: color var(--motion-duration-quick) var(--motion-ease-standard);
+
+    &:hover { color: var(--argo-text-secondary) !important; }
+  }
+}
+
+.argo-footer__social {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.argo-footer__social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--surface-border);
+  color: var(--argo-text-secondary) !important;
+  text-decoration: none !important;
+  transition:
+    background var(--motion-duration-quick) var(--motion-ease-standard),
+    border-color var(--motion-duration-quick) var(--motion-ease-standard),
+    color var(--motion-duration-quick) var(--motion-ease-standard);
+
+  svg { fill: currentColor; display: block; }
+
+  &:hover {
+    background: rgba(255, 198, 74, 0.08);
+    border-color: rgba(255, 198, 74, 0.3);
+    color: var(--argo-gold) !important;
+  }
+}
+
+// Slot for the Discourse "Powered by" badge (JS moves it here)
+.argo-footer__powered-by-slot {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+
+  // Override the standalone slot styles — badge lives here now
+  .powered-by-discourse__content {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none;
+    padding: 0;
+  }
+}
