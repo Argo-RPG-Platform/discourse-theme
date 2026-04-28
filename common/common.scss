@@ -384,10 +384,16 @@ body[data-sidebar-open="false"] .sidebar-wrapper {
   display: flex !important;
   align-items: stretch;
   gap: 0 !important;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
+#main-outlet-wrapper > *:not(.sidebar-wrapper),
 #main-outlet {
+  flex: 1 1 auto;
   min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .navigation-container {
@@ -410,7 +416,10 @@ body[data-sidebar-open="false"] .sidebar-wrapper {
 // list-controls container — must not create horizontal scroll
 .list-controls,
 .list-controls .container {
+  width: 100%;
+  max-width: 100%;
   min-width: 0;
+  box-sizing: border-box;
   overflow-x: hidden;
 }
 

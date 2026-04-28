@@ -106,19 +106,23 @@ body[data-sidebar-open="false"] .sidebar-wrapper {
 // (ID + class = 110 specificity, same as common.scss rule; desktop.scss loads last so it wins)
 #main-outlet-wrapper.wrap {
   max-width: 100% !important;
-  width: 100% !important;
+  width: calc(100% - 240px) !important;
   padding: 0 !important;
   margin-left: 240px !important;
   transition: margin-left var(--motion-duration-deliberate) var(--motion-ease-standard);
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 body[data-sidebar-open="false"] #main-outlet-wrapper.wrap {
   margin-left: 0 !important;
+  width: 100% !important;
 }
 
 #main-outlet {
   width: 100%;
   max-width: none !important;
+  min-width: 0;
   margin: 0 !important;
   padding: 0 24px 24px !important;
   box-sizing: border-box;
