@@ -413,6 +413,10 @@ body[data-sidebar-open="false"] .sidebar-wrapper {
   margin: 0;
 }
 
+.argo-section-header__toggle {
+  display: none;
+}
+
 // list-controls container — must not create horizontal scroll
 .list-controls,
 .list-controls .container {

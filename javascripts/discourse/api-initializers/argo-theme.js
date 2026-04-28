@@ -404,6 +404,21 @@ export default apiInitializer("1.0", (api) => {
     });
   }
 
+  function isMobileViewport() {
+    return window.matchMedia?.("(max-width: 767px)")?.matches || false;
+  }
+
+  function setSectionCollapsed(header, grid, collapsed) {
+    header.classList.toggle("is-collapsed", collapsed);
+    grid.classList.toggle("is-collapsed", collapsed);
+    grid.hidden = collapsed;
+
+    const toggle = header.querySelector(".argo-section-header__toggle");
+    if (toggle) {
+      toggle.setAttribute("aria-expanded", String(!collapsed));
+    }
+  }
+
   // ── Subcategory section layout ────────────────────────────────────────────
   // On /categories, transforms the flat category table into:
   //   [Section header: Argo Official]
@@ -448,8 +463,9 @@ export default apiInitializer("1.0", (api) => {
     container.className = "argo-category-sections";
 
     let hasContent = false;
+    let sectionIndex = 0;
 
-    rows.forEach((row) => {
+    rows.forEach((row, index) => {
       const categoryId = row.getAttribute("data-category-id");
       const subcategoryBadges = Array.from(
         row.querySelectorAll(".subcategories .badge-category__wrapper")
@@ -459,6 +475,7 @@ export default apiInitializer("1.0", (api) => {
       if (!subcategoryBadges.length) return;
 
       hasContent = true;
+      const currentSectionIndex = sectionIndex++;
 
       // ── Section header ───────────────────────────────────────────
       const titleLink = row.querySelector(".category-title-link");
@@ -472,6 +489,9 @@ export default apiInitializer("1.0", (api) => {
       const colorMatch = badgeStyle.match(/--category-badge-color:\s*([^;]+)/);
       const accentColor = colorMatch?.[1]?.trim() || null;
 
+      const sectionId = `argo-category-section-${categoryId || index}`;
+      const gridId = `${sectionId}-grid`;
+
       const header = document.createElement("div");
       header.className = "argo-section-header";
       header.dataset.categoryId = categoryId;
@@ -482,6 +502,15 @@ export default apiInitializer("1.0", (api) => {
       titleEl.href = sectionHref;
       titleEl.textContent = sectionName;
       header.appendChild(titleEl);
+
+      const toggleEl = document.createElement("button");
+      toggleEl.className = "argo-section-header__toggle";
+      toggleEl.type = "button";
+      toggleEl.setAttribute("aria-controls", gridId);
+      toggleEl.setAttribute("aria-expanded", "true");
+      toggleEl.setAttribute("aria-label", `Toggle ${sectionName} subcategories`);
+      toggleEl.innerHTML = '<span class="argo-section-header__toggle-icon" aria-hidden="true"></span>';
+      header.appendChild(toggleEl);
 
       if (parentCat?.description_excerpt) {
         const desc = document.createElement("p");
@@ -495,6 +524,7 @@ export default apiInitializer("1.0", (api) => {
       // ── Subcategory card grid ────────────────────────────────────
       const grid = document.createElement("div");
       grid.className = "category-list argo-subcategory-grid";
+      grid.id = gridId;
 
       subcategoryBadges.forEach((badge) => {
         const badgeSpan = badge.querySelector(".badge-category");
@@ -570,6 +600,14 @@ export default apiInitializer("1.0", (api) => {
         grid.appendChild(card);
       });
 
+      toggleEl.addEventListener("click", () => {
+        setSectionCollapsed(header, grid, !header.classList.contains("is-collapsed"));
+      });
+
+      if (isMobileViewport() && currentSectionIndex > 0) {
+        setSectionCollapsed(header, grid, true);
+      }
+
       container.appendChild(grid);
     });
 
@@ -629,4 +667,6 @@ export default apiInitializer("1.0", (api) => {
     relocatePoweredByDiscourse();
   }, 80);
   setTimeout(runThemeDomWork, 360);
+  setTimeout(runThemeDomWork, 1200);
+  setTimeout(runThemeDomWork, 2400);
 });
