@@ -466,8 +466,15 @@ table.topic-list {
 // COMPOSER
 // ============================================================
 
-#reply-control {
-  height: 100% !important;
+#reply-control.closed {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  pointer-events: none;
+}
+
+#reply-control:not(.closed) {
+  max-height: calc(100vh - 56px);
   min-height: 250px;
 }
 
