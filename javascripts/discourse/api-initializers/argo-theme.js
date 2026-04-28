@@ -570,6 +570,18 @@ export default apiInitializer("1.0", (api) => {
     categoryList.classList.add("argo-hidden");
   }
 
+  function runThemeDomWork() {
+    ensureNavInsideHeader();
+    buildSubcategoryLayout();
+    tagGameSystemCards();
+    applyCategoryImageFallbacks();
+    enhanceCategoriesPageCards();
+    rewriteCategoryTableIfNeeded();
+    integrateNativeHeaderButtons();
+    watchSidebarToggle();
+    relocatePoweredByDiscourse();
+  }
+
   // ── Page change handler ───────────────────────────────────────────────────
   // Discourse is an SPA — we must re-run our DOM work after every route change.
   api.onPageChange(() => {
@@ -607,4 +619,5 @@ export default apiInitializer("1.0", (api) => {
     watchSidebarToggle();
     relocatePoweredByDiscourse();
   }, 80);
+  setTimeout(runThemeDomWork, 360);
 });

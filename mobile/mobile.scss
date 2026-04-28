@@ -1,104 +1,440 @@
 // ============================================================
-// ARGO DISCOURSE THEME — mobile.scss
+// ARGO DISCOURSE THEME - mobile.scss
 // Applied only on mobile (Discourse injects this for mobile UA).
 // ============================================================
 
 
 // ============================================================
-// SIDEBAR — Mobile overlay (no content push)
+// MOBILE SHELL
 // ============================================================
 
-// On mobile the sidebar slides over content as a drawer overlay.
-// No margin-left shift on the main content — it stays full width.
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--argo-bg) !important;
+}
+
+.d-header-wrap {
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  z-index: 1000;
+}
+
+.d-header {
+  height: 56px !important;
+}
+
+.d-header .wrap {
+  height: 56px !important;
+  min-width: 0;
+  overflow: hidden;
+}
+
+#main-outlet-wrapper,
+#main-outlet-wrapper.wrap {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+#main-outlet {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 64px 12px 20px !important;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.list-controls,
+.list-controls .container,
+.list-container,
+.category-list-area,
+.categories-and-latest,
+.category-list,
+.argo-category-sections {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+
+// ============================================================
+// SIDEBAR - Mobile overlay
+// ============================================================
+
 .sidebar-wrapper {
   position: fixed !important;
   left: 0 !important;
-  top: 0 !important;
-  height: 100vh !important;
-  width: 240px !important;
-  z-index: 900;
-  transform: translateX(-240px) !important;
+  top: 56px !important;
+  width: min(82vw, 280px) !important;
+  height: calc(100vh - 56px) !important;
+  z-index: 950;
+  transform: translateX(-100%) !important;
+  transition: transform var(--motion-duration-deliberate) var(--motion-ease-standard) !important;
+}
+
+.sidebar-container,
+#d-sidebar {
+  width: 100% !important;
+  min-width: 0 !important;
 }
 
 body[data-sidebar-open="true"] .sidebar-wrapper {
   transform: translateX(0) !important;
 }
 
-#main-outlet-wrapper {
-  margin-left: 0 !important;
-}
-
-.d-header-wrap {
-  left: 0 !important;
-  width: 100% !important;
-}
-
 
 // ============================================================
-// HEADER / NAV BAR
+// COMPACT FORUM HEADER
 // ============================================================
 
-// Tighter padding on small screens
+#argo-nav {
+  height: 56px !important;
+  flex: 1 1 auto !important;
+  min-width: 0;
+  order: 1;
+}
+
 .argo-nav__inner {
-  padding: 0 10px !important;
-  gap: 4px !important;
+  height: 56px !important;
+  min-width: 0;
+  padding: 0 8px !important;
+  gap: 6px !important;
+  overflow: hidden;
 }
 
-// Smaller logo on mobile
-.argo-nav__logo img {
-  height: 28px !important;
+.argo-nav__logo {
+  margin-right: 2px !important;
+
+  img {
+    height: 26px !important;
+    max-width: 86px;
+  }
 }
 
-// Hide all non-active nav link text labels — icon only on mobile
-// The Forum link (always active) keeps its label; others get icon-only
-.argo-nav__link:not(.argo-nav__link--active) {
-  span { display: none !important; }
-  padding: 6px 8px !important;
+.argo-nav__links {
+  flex: 0 0 auto;
+  min-width: 0;
+  gap: 0 !important;
 }
 
-// Hide Guilds, Campaigns, Marketplace entirely on mobile
-// (they link to the app — the hamburger menu or a dedicated "App" link is better UX)
-// Only Home and Forum links remain, Forum being the active one
+.argo-nav__link[data-argo-nav="home"],
 .argo-nav__link[data-argo-nav="guilds"],
 .argo-nav__link[data-argo-nav="campaigns"],
 .argo-nav__link[data-argo-nav="marketplace"] {
   display: none !important;
 }
 
-// Home link: show icon only (no text) on mobile
-.argo-nav__link[data-argo-nav="home"] span {
-  display: none !important;
+.argo-nav__link[data-argo-nav="forum"] {
+  display: inline-flex !important;
+  min-height: 38px;
+  padding: 7px 10px !important;
+  border-radius: 8px !important;
+  font-size: 0.86rem !important;
+  line-height: 1 !important;
+  white-space: nowrap;
+
+  .argo-nav__icon {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.argo-nav__spacer {
+  flex: 1 1 auto;
+  min-width: 4px;
+}
+
+.argo-native-buttons,
+.d-header .header-buttons,
+.d-header .header-buttons.start,
+.d-header .header-buttons.end,
+.d-header .d-header-icons,
+.d-header .panel {
+  display: flex !important;
+  align-items: center !important;
+  flex: 0 0 auto;
+  min-width: 0;
+  gap: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.argo-native-buttons--right {
+  margin-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.d-header .header-buttons .btn,
+.d-header .header-buttons .icon,
+.d-header .d-header-icons .btn,
+.d-header .panel .btn,
+.d-header .header-dropdown-toggle {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  border-radius: 9px !important;
+}
+
+.d-header .current-user img.avatar,
+.d-header .header-dropdown-toggle .avatar {
+  width: 30px !important;
+  height: 30px !important;
 }
 
 
 // ============================================================
-// CATEGORY CARDS — single column on mobile
+// DISCOVERY CONTROLS
 // ============================================================
+
+.list-controls {
+  margin: 0 0 12px !important;
+}
+
+.list-controls .container {
+  padding: 0 !important;
+}
+
+.navigation-container {
+  display: flex !important;
+  flex-direction: column;
+  align-items: stretch !important;
+  gap: 10px !important;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.category-breadcrumb {
+  width: 100%;
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.category-breadcrumb li,
+.category-breadcrumb details,
+.category-breadcrumb .select-kit-header {
+  min-width: 0;
+  max-width: 100%;
+}
+
+#navigation-bar.nav-pills {
+  width: 100%;
+  flex: 0 1 auto !important;
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 !important;
+  overflow: visible;
+}
+
+#navigation-bar.nav-pills li a {
+  padding: 7px 10px !important;
+  font-size: 0.88rem;
+}
+
+.navigation-controls {
+  width: 100%;
+  flex: 0 0 auto !important;
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  margin: 0 !important;
+}
+
+.navigation-controls .btn {
+  min-height: 38px;
+}
+
+
+// ============================================================
+// WELCOME / SEARCH
+// ============================================================
+
+.welcome-banner {
+  margin: 0 0 12px !important;
+}
+
+.custom-search-banner-wrap {
+  padding: 14px 12px !important;
+  border-radius: 12px !important;
+}
+
+.welcome-banner__title {
+  font-size: 1.35rem !important;
+  line-height: 1.1 !important;
+  margin-bottom: 10px !important;
+}
+
+.search-menu,
+.search-input,
+.search-input input {
+  max-width: 100% !important;
+}
+
+
+// ============================================================
+// CATEGORY SECTIONS AND CARDS
+// ============================================================
+
+.category-list-area,
+.categories-and-latest,
+.category-list {
+  margin-top: 8px !important;
+}
+
+.argo-category-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 22px !important;
+}
+
+.argo-section-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start !important;
+  gap: 6px !important;
+  padding: 2px 2px 10px !important;
+  border-bottom-width: 1px !important;
+}
+
+.argo-section-header::after {
+  width: 40px !important;
+  height: 2px !important;
+}
+
+.argo-section-header__title {
+  font-size: 1.2rem !important;
+  line-height: 1.15 !important;
+}
+
+.argo-section-header__desc {
+  font-size: 0.84rem !important;
+  line-height: 1.45 !important;
+}
+
 .category-list,
-table.category-list {
+table.category-list,
+.argo-subcategory-grid {
   grid-template-columns: 1fr !important;
   gap: 12px !important;
 }
 
-// Shorter image area on mobile to preserve content visibility
+.category-list-item,
+tr.category,
+body.argo-categories-page .category-list-item,
+body.argo-categories-page tr.category {
+  border-radius: 12px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 12px 28px rgba(0, 0, 0, 0.22) !important;
+  transform: none !important;
+}
+
+.category-list-item:hover,
+tr.category:hover,
+body.argo-categories-page .category-list-item:hover,
+body.argo-categories-page tr.category:hover {
+  transform: none !important;
+}
+
 .category-list-item .category-logo,
-tr.category .category-logo {
-  height: 120px !important;
+tr.category .category-logo,
+body.argo-categories-page .category-list-item .category-logo,
+body.argo-categories-page tr.category .category-logo {
+  height: 112px !important;
+  border-radius: 12px 12px 0 0 !important;
 }
 
-// Card body tighter padding
+.category-list-item[data-category-type="game-system"] .category-logo,
+tr.category[data-category-type="game-system"] .category-logo,
+body.argo-categories-page .category-list-item[data-category-type="game-system"] .category-logo,
+body.argo-categories-page tr.category[data-category-type="game-system"] .category-logo,
+.argo-subcategory-grid .category-list-item[data-category-type="game-system"] .category-logo {
+  height: 160px !important;
+}
+
+.argo-subcategory-grid .category-list-item .category-logo {
+  height: 104px !important;
+}
+
+.category-list-item[data-no-image]::before,
+tr.category[data-no-image]::before {
+  display: none !important;
+}
+
+.category-list-item[data-no-image] .category-logo,
+tr.category[data-no-image] .category-logo,
+.argo-subcategory-grid .category-list-item[data-no-image] .category-logo {
+  height: 7px !important;
+  background: var(--subcategory-color, var(--argo-gold)) !important;
+  opacity: 0.78;
+}
+
 .category-list-item td.category,
-tr.category td.category {
+tr.category td.category,
+body.argo-categories-page .category-list-item td.category,
+body.argo-categories-page tr.category td.category,
+.argo-subcategory-grid .category-list-item > .category {
   padding: 12px !important;
+  gap: 6px !important;
 }
 
-// Topic count chip
+.category-list-item .category-name,
+tr.category .category-name,
+.category-list-item a.category-name,
+tr.category a.category-name,
+body.argo-categories-page .category-list-item .category-name,
+body.argo-categories-page tr.category .category-name,
+body.argo-categories-page .category-list-item a.category-name,
+body.argo-categories-page tr.category a.category-name,
+.argo-subcategory-grid .category-list-item .category-name a {
+  font-size: 1rem !important;
+  line-height: 1.18 !important;
+  letter-spacing: 0 !important;
+}
+
+.category-list-item .category-description,
+tr.category .category-description,
+body.argo-categories-page .category-list-item .category-description,
+body.argo-categories-page tr.category .category-description {
+  font-size: 0.84rem !important;
+  line-height: 1.45 !important;
+  -webkit-line-clamp: 2 !important;
+}
+
 .category-list-item td.topics,
-tr.category td.topics {
+tr.category td.topics,
+body.argo-categories-page .category-list-item td.topics,
+body.argo-categories-page tr.category td.topics,
+.argo-subcategory-grid .category-list-item > .topics {
   padding: 0 12px 12px !important;
 }
 
-// Subcategories — hide on mobile to keep cards compact
+.category-list-item td.topics .value,
+tr.category td.topics .value,
+.category-list-item .num.topics a,
+tr.category .num.topics a {
+  padding: 3px 9px !important;
+  font-size: 0.78rem !important;
+}
+
 .category-list-item .subcategories,
 tr.category .subcategories {
   display: none !important;
@@ -106,9 +442,12 @@ tr.category .subcategories {
 
 
 // ============================================================
-// TOPIC LIST — hide stat columns on mobile
+// TOPIC LIST
 // ============================================================
+
 table.topic-list {
+  width: 100% !important;
+
   .num.posts-map,
   .num.views,
   .num.age,
@@ -117,35 +456,21 @@ table.topic-list {
     display: none !important;
   }
 
-  // Title column takes full width
   td.main-link {
-    padding: 10px 8px !important;
+    padding: 10px 6px !important;
   }
 }
 
 
 // ============================================================
-// COMPOSER — full-height on mobile
+// COMPOSER
 // ============================================================
+
 #reply-control {
   height: 100% !important;
   min-height: 250px;
 }
 
 .d-editor-input {
-  font-size: 1rem !important; // prevent iOS auto-zoom on focus
-}
-
-
-// ============================================================
-// MAIN OUTLET — remove horizontal padding on mobile
-// ============================================================
-#main-outlet {
-  padding: 0 8px !important;
-}
-
-.category-list-area,
-.categories-and-latest,
-.category-list {
-  margin-top: 8px;
+  font-size: 1rem !important;
 }
