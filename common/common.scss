@@ -799,6 +799,48 @@ table.topic-list {
 
   td { background: transparent !important; }
 
+  // Lock the title row layout so hovering the pin-toggle / status icons
+  // doesn't push the title to the right and wrap it across multiple lines.
+  // Discourse's default .pin-toggle-button hover state injects inline help
+  // text via a pseudo-element / title attribute, which expands the inline
+  // flow when there's no flex container holding the row.
+  .link-top-line {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    gap: 6px !important;
+    min-width: 0;
+  }
+
+  .topic-statuses {
+    display: inline-flex !important;
+    align-items: center !important;
+    flex: 0 0 auto !important;
+  }
+
+  .topic-status,
+  .pin-toggle-button {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    white-space: nowrap !important;
+
+    &::before,
+    &::after,
+    &:hover::before,
+    &:hover::after { content: none !important; }
+  }
+
+  // Title sits in the remaining space and ellipsis-truncates if needed
+  // so it never wraps to a second line.
+  .title.raw-topic-link,
+  .raw-topic-link {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   // Topic title
   .title a,
   .topic-title a,
