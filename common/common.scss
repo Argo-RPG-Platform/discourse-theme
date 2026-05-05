@@ -783,18 +783,11 @@ table.topic-list {
 
   &:hover {
     background: var(--surface-section-bg) !important;
-
-    // Gold left-edge bar on hover
-    &::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 8px;
-      bottom: 8px;
-      width: 2px;
-      background: var(--argo-gold);
-      border-radius: 2px;
-    }
+    // Gold left-edge bar — drawn with inset box-shadow rather than ::before
+    // because <tr>::before renders as an anonymous extra table cell in
+    // Chromium/Firefox, shifting the real cells to the right and wrapping
+    // the title across multiple lines.
+    box-shadow: inset 2px 0 0 var(--argo-gold) !important;
   }
 
   td { background: transparent !important; }
