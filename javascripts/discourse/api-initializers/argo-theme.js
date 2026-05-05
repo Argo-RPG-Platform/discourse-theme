@@ -29,8 +29,22 @@ export default apiInitializer("1.0", (api) => {
 
   // ── Category image fallback ───────────────────────────────────────────────
   function syncCategoriesPageState() {
-    const isCategoriesPage = window.location.pathname.startsWith("/categories");
-    document.body.classList.toggle("argo-categories-page", isCategoriesPage);
+    const path = window.location.pathname;
+    const body = document.body;
+    const isCategoriesRoute = path.startsWith("/categories");
+    // Discourse sets navigation-categories + categories-list on the body
+    // whenever the categories view is the active route, including when
+    // "categories" is configured as the site homepage. Detect that case
+    // so the home page receives the same theme treatment as /categories.
+    const isHomePath = path === "/" || path === "" || path === "/latest";
+    const isCategoriesHomepage =
+      isHomePath &&
+      body.classList.contains("navigation-categories") &&
+      body.classList.contains("categories-list");
+    body.classList.toggle(
+      "argo-categories-page",
+      isCategoriesRoute || isCategoriesHomepage
+    );
   }
 
   function getSiteCategories() {
