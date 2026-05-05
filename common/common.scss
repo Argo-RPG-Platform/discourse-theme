@@ -1560,7 +1560,22 @@ details.select-kit .filter-input {
   &:hover { color: var(--argo-gold-dark) !important; }
 }
 
+.reviewable-timeline,
+.reviewable-timeline .timeline-events,
+.reviewable-timeline .timeline-event,
+.reviewable-timeline .timeline-event__content,
+.reviewable-timeline .timeline-event__main,
+.reviewable-timeline .timeline-event__text,
+.reviewable-timeline .timeline-event__icon {
+  background: transparent !important;
+}
+
 .reviewable-timeline {
+  .timeline-event {
+    border-bottom: 1px solid var(--surface-border) !important;
+    &:last-child { border-bottom: none !important; }
+  }
+
   .timeline-event__title,
   .timeline-event__text { color: var(--argo-foreground) !important; }
 
