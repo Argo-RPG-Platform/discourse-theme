@@ -1603,6 +1603,9 @@ input[type="email"],
 input[type="password"],
 input[type="search"],
 textarea,
+select,
+.form-kit__control-select,
+.d-select,
 .select-kit .select-kit-header {
   background: rgba(255, 255, 255, 0.04) !important;
   border: 1px solid var(--surface-border-strong) !important;
@@ -1637,6 +1640,15 @@ textarea,
 input[type="checkbox"],
 input[type="radio"] {
   accent-color: var(--argo-gold);
+}
+
+// Native <select> options — the dropdown panel itself is rendered by the OS,
+// but most browsers honor background/color on <option>.
+select option,
+.form-kit__control-select option,
+.d-select__option {
+  background: var(--argo-card) !important;
+  color: var(--argo-foreground) !important;
 }
 
 // ============================================================
