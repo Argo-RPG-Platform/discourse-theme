@@ -1143,12 +1143,37 @@ table.topic-list {
 // J: BADGES, NOTIFICATIONS, TAG PILLS, USER CARD
 // ============================================================
 
-// Notification count dot
-.badge-notification,
+// Notification count pill — used for header notification counts ("3"),
+// header chat badges, etc. — content is a number, so it stays a pill.
+// We exclude .new-topic and .unread because those are empty-content
+// indicator dots, not count pills, and need different sizing.
+.badge-notification:not(.new-topic):not(.unread),
 .unread-notifications {
   background: var(--argo-gold) !important;
   color: #000 !important;
   font-weight: 700 !important;
+}
+
+// Topic-list "new" / "unread" indicator — empty <a class="badge-notification
+// new-topic"> rendered as a small gold dot. Discourse's default tries to
+// paint this in the tertiary (cyan) color; force our brand gold and a clean
+// circle so it can't blend with leftover defaults.
+.badge-notification.new-topic,
+.badge-notification.unread {
+  background: var(--argo-gold) !important;
+  color: transparent !important;
+  border: none !important;
+  width: 8px !important;
+  height: 8px !important;
+  min-width: 8px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  box-shadow: none !important;
+
+  &::before,
+  &::after { content: none !important; }
 }
 
 // Tag pills
