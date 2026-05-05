@@ -847,6 +847,22 @@ table.topic-list {
 
     &:hover { color: var(--argo-gold) !important; }
   }
+}
+
+// Topic page title (/t/:slug/:id) — Discourse renders this as <a class="fancy-title">
+// inside #topic-title; default color is the tertiary, which on our dark
+// background is unreadable. Use brand foreground with gold hover.
+#topic-title a.fancy-title,
+.fancy-title,
+a.fancy-title {
+  color: var(--argo-foreground) !important;
+  font-family: var(--font-brand) !important;
+  text-decoration: none !important;
+
+  &:hover { color: var(--argo-gold) !important; }
+
+  .edit-topic { color: var(--argo-text-secondary) !important; }
+  &:hover .edit-topic { color: var(--argo-gold) !important; }
 
   // Visited (read) topics — dimmer to contrast with unread
   &.visited .title a,
