@@ -1338,6 +1338,24 @@ a.sidebar-sections__back-to-forum {
   &:hover { color: var(--argo-gold) !important; }
 }
 
+// Generated API key panel (/admin/api/keys/new result screen)
+.generated-api-key,
+.generated-api-key__details {
+  background: var(--argo-card) !important;
+  color: var(--argo-foreground) !important;
+  border: 1px solid var(--surface-border) !important;
+  border-radius: var(--radius) !important;
+}
+
+.generated-api-key__detail-row {
+  border-bottom: 1px solid var(--surface-border) !important;
+  &:last-child { border-bottom: none !important; }
+}
+
+.generated-api-key__label {
+  color: var(--argo-text-secondary) !important;
+}
+
 .theme-card__badge {
   background: rgba(255,255,255,0.06) !important;
   color: var(--argo-text-secondary) !important;
