@@ -1182,6 +1182,19 @@ a.discourse-tag {
   color: var(--argo-foreground) !important;
 }
 
+// Bare section headings inside admin pages (Permissions / Groups / Activity /
+// User upcoming changes / User exports …) — render in brand gold so they read
+// against the dark .admin-detail surface.
+.admin-detail h1,
+.admin-detail h2,
+.admin-content h1,
+.admin-content h2,
+.admin-contents h1,
+.admin-contents h2 {
+  color: var(--argo-gold) !important;
+  font-family: var(--font-brand) !important;
+}
+
 .d-breadcrumbs__link {
   color: var(--argo-text-secondary) !important;
   &:hover { color: var(--argo-gold) !important; }
@@ -1452,6 +1465,119 @@ label.form-kit__container-title {
 .form-kit div:not([class*="d-icon"]),
 .form-kit span:not([class*="d-icon"]):not(.badge-category__name) {
   color: var(--argo-foreground) !important;
+}
+
+// ── d-table (admin tables: User upcoming changes, exports, etc.)
+.d-table {
+  background: transparent !important;
+  color: var(--argo-foreground) !important;
+
+  .d-table__header,
+  .d-table__header th {
+    color: var(--argo-text-secondary) !important;
+    background: transparent !important;
+    border-bottom: 1px solid var(--surface-border) !important;
+  }
+
+  .d-table__row {
+    border-bottom: 1px solid var(--surface-border) !important;
+  }
+
+  .d-table__cell,
+  .d-table__overview-name {
+    color: var(--argo-foreground) !important;
+  }
+
+  .d-table__overview-about,
+  .d-table__mobile-label {
+    color: var(--argo-text-secondary) !important;
+  }
+}
+
+// ── select-kit rendered as <details> (group chooser, trust-level dropdown,
+// and other multi/single-selects on admin user pages). The generic
+// .select-kit-header rule below loses the specificity battle against the
+// browser's default <details> styling, so we override explicitly.
+details.select-kit,
+details.select-kit > summary.select-kit-header {
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: var(--argo-foreground) !important;
+  border: 1px solid var(--surface-border-strong) !important;
+  border-radius: var(--radius) !important;
+}
+
+details.select-kit .select-kit-collection,
+details.select-kit .select-kit-body,
+details.select-kit .select-kit-wrapper {
+  background: var(--argo-card) !important;
+  color: var(--argo-foreground) !important;
+  border: 1px solid var(--surface-border) !important;
+}
+
+details.select-kit .select-kit-row {
+  color: var(--argo-foreground) !important;
+  background: transparent !important;
+}
+
+details.select-kit .select-kit-row:hover,
+details.select-kit .select-kit-row.is-highlighted {
+  background: var(--surface-accent-bg) !important;
+  color: var(--argo-gold) !important;
+}
+
+details.select-kit .selected-name,
+details.select-kit .formatted-selection,
+details.select-kit .filter-input {
+  color: var(--argo-foreground) !important;
+  background: transparent !important;
+}
+
+// ── Review queue (/review, /review/:id)
+.review-container,
+.review-item,
+.review-item__post,
+.review-item__post-content,
+.review-item__insights,
+.reviewable-timeline,
+.reviewable-meta-data,
+.reviewable-actions,
+.reviewable-scores,
+.reviewable-conversation {
+  background: var(--argo-card) !important;
+  color: var(--argo-foreground) !important;
+  border-color: var(--surface-border) !important;
+}
+
+.review-item__post .post-body,
+.review-item__post .post-body p,
+.review-item__post .post-body li,
+.review-item__post .post-body strong {
+  color: var(--argo-foreground) !important;
+}
+
+.review-item__post .post-body a {
+  color: var(--argo-gold) !important;
+  &:hover { color: var(--argo-gold-dark) !important; }
+}
+
+.reviewable-timeline {
+  .timeline-event__title,
+  .timeline-event__text { color: var(--argo-foreground) !important; }
+
+  .relative-date,
+  .timeline-event__meta { color: var(--argo-text-secondary) !important; }
+
+  .timeline-event__icon { color: var(--argo-gold) !important; }
+
+  a { color: var(--argo-gold) !important; }
+}
+
+.review-item__flag-reason {
+  background: var(--surface-accent-bg) !important;
+  color: var(--argo-gold) !important;
+  border: 1px solid var(--surface-accent-border) !important;
+  border-radius: var(--radius) !important;
+  padding: 2px 6px !important;
 }
 
 // ============================================================
